@@ -1,4 +1,10 @@
-CREATE TABLE IF NOT EXISTS archive_folders(
+DROP TABLE IF EXISTS archive_folders;
+DROP TABLE IF EXISTS archive_files;
+DROP TABLE IF EXISTS archive_itemHierarchy;
+DROP TABLE IF EXISTS archive_permissions;
+DROP TABLE IF EXISTS archive_itemPermissions;
+
+CREATE TABLE IF NOT EXISTS Archive_Folders(
   Id VARCHAR(50),
   FolderName VARCHAR(255),
   Author INT NOT NULL,
@@ -7,7 +13,7 @@ CREATE TABLE IF NOT EXISTS archive_folders(
   PRIMARY KEY (Id)
 ) ENGINE=INNODB;
 
-CREATE TABLE IF NOT EXISTS archive_files(
+CREATE TABLE IF NOT EXISTS Archive_Files(
   Id VARCHAR(50),
   FileName VARCHAR(255),
   Author INT NOT NULL,
@@ -19,13 +25,13 @@ CREATE TABLE IF NOT EXISTS archive_files(
   PRIMARY KEY (Id)
 ) ENGINE=INNODB;
 
-CREATE TABLE IF NOT EXISTS archive_itemHierarchy(
+CREATE TABLE IF NOT EXISTS Archive_ItemHierarchy(
   ItemId VARCHAR(50),
   ParentId VARCHAR(50),
   PRIMARY KEY (ItemId,ParentId)
 ) ENGINE=INNODB
 
-CREATE TABLE IF NOT EXISTS archive_permissions(
+CREATE TABLE IF NOT EXISTS Archive_Permissions(
   Id INT AUTO_INCREMENT,
   Code VARCHAR() NOT NULL,
   Description TEXT NULL,
@@ -33,7 +39,7 @@ CREATE TABLE IF NOT EXISTS archive_permissions(
   UNIQUE(Code)
 ) ENGINE=INNODB;
 
-CREATE TABLE IF NOT EXISTS archive_itemPermissions(
+CREATE TABLE IF NOT EXISTS Archive_ItemPermissions(
   ItemId VARCHAR(50),
   PermissionId INT,
   Approval INT NOT NULL,
