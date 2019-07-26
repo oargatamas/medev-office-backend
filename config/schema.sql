@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS Archive_ItemHierarchy(
 ) ENGINE=INNODB
 
 CREATE TABLE IF NOT EXISTS Archive_Permissions(
-  Id INT AUTO_INCREMENT,
-  Code VARCHAR() NOT NULL,
+  Id INT,
+  Code VARCHAR(50) NOT NULL,
   Description TEXT NULL,
-  PRIMARY KEY(Id)
+  PRIMARY KEY(Id),
   UNIQUE(Code)
 ) ENGINE=INNODB;
 
@@ -44,5 +44,5 @@ CREATE TABLE IF NOT EXISTS Archive_ItemPermissions(
   PermissionId INT,
   Approval INT NOT NULL,
   CreatedAt DATETIME NOT NULL,
-  PRIMARY KEY(FileId,PermissionId)
+  PRIMARY KEY(ItemId,PermissionId)
 ) ENGINE=INNODB;
