@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS archive_folders(
+  Id VARCHAR(50),
+  FolderName VARCHAR(255),
+  Author INT NOT NULL,
+  CreatedAt DATETIME NOT NULL,
+  UpdatedAt DATETIME NOT NULL,
+  PRIMARY KEY (Id)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS archive_files(
+  Id VARCHAR(50),
+  FileName VARCHAR(255),
+  Author INT NOT NULL,
+  SizeInBytes INT NOT NULL DEFAULT 0,
+  Path VARCHAR(255) NOT NULL,
+  MimeType VARCHAR(20) NOT NULL,
+  CreatedAt DATETIME NOT NULL,
+  UpdatedAt DATETIME NOT NULL,
+  PRIMARY KEY (Id)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS archive_itemHierarchy(
+  ItemId VARCHAR(50),
+  ParentId VARCHAR(50),
+  PRIMARY KEY (ItemId,ParentId)
+) ENGINE=INNODB
+
+CREATE TABLE IF NOT EXISTS archive_permissions(
+  Id INT AUTO_INCREMENT,
+  Code VARCHAR() NOT NULL,
+  Description TEXT NULL,
+  PRIMARY KEY(Id)
+  UNIQUE(Code)
+) ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS archive_itemPermissions(
+  ItemId VARCHAR(50),
+  PermissionId INT,
+  Approval INT NOT NULL,
+  CreatedAt DATETIME NOT NULL,
+  PRIMARY KEY(FileId,PermissionId)
+) ENGINE=INNODB;
