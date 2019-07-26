@@ -6,7 +6,7 @@
  * Time: 9:51
  */
 
-namespace Services\File;
+namespace MedevOffice\Services\File;
 
 
 use MedevSlim\Core\Service\APIService;
