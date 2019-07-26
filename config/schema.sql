@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS archive_folders;
-DROP TABLE IF EXISTS archive_files;
-DROP TABLE IF EXISTS archive_itemHierarchy;
-DROP TABLE IF EXISTS archive_permissions;
-DROP TABLE IF EXISTS archive_itemPermissions;
+DROP TABLE IF EXISTS Archive_Folders;
+DROP TABLE IF EXISTS Archive_Files;
+DROP TABLE IF EXISTS Archive_ItemHierarchy;
+DROP TABLE IF EXISTS Archive_Permissions;
+DROP TABLE IF EXISTS Archive_ItemPermissions;
 
 CREATE TABLE IF NOT EXISTS Archive_Folders(
   Id VARCHAR(50),
