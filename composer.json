@@ -1,0 +1,23 @@
+{
+  "require": {
+    "medev-core/slim": "@dev",
+    "medev-auth/slim": "@dev"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url":  "https://TangoMajom@bitbucket.org/medevservices/medevcore-slim.git"
+    },
+    {
+      "type": "vcs",
+      "url":  "https://TangoMajom@bitbucket.org/medevservices/medevslim-authserver.git"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "MedevOffice\\": "src/"
+    }
+  },
+  "name": "medev-office/backend",
+  "description": "Server side API, and Repository management application for MedevOffice"
+}
