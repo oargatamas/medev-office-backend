@@ -12,8 +12,9 @@ namespace MedevOffice\Services\File\Entities;
 use DateTime;
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
-class Folder extends DatabaseEntity
+class Folder extends DatabaseEntity implements \JsonSerializable
 {
+    const ID = "folderId";
     /**
      * @var string
      */
@@ -117,5 +118,24 @@ class Folder extends DatabaseEntity
     public function setPermissions($permissions)
     {
         $this->permissions = $permissions;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            "Id" => $this->getIdentifier(),
+            "Type" => "folder",
+            "Name" => $this->getFoldername(),
+            //"Author" => $this->getAuthor(),
+            "CreatedAt" => $this->getCreatedAt(),
+            "UpdatedAt" => $this->getUpdatedAt()
+        ];
     }
 }

@@ -12,7 +12,7 @@ namespace MedevOffice\Services\File\Entities;
 use DateTime;
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
-class File extends DatabaseEntity
+class File extends DatabaseEntity implements \JsonSerializable
 {
     /**
      * @var string
@@ -180,5 +180,17 @@ class File extends DatabaseEntity
     public function setPermissions($permissions)
     {
         $this->permissions = $permissions;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [];
     }
 }
