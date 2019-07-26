@@ -1,0 +1,11 @@
+{
+  "database": {
+    "database_type": "mysql",
+    "database_name": "medev_office",
+    "server": "localhost",
+    "username": "medev_office",
+    "password": "tWTUoSQLCjiXk1y5",
+    "charset": "utf8mb4",
+    "collation": "utf8mb4_general_ci"
+  }
+}
