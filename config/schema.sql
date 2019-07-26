@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS Archive_Permissions(
 CREATE TABLE IF NOT EXISTS Archive_ItemPermissions(
   ItemId VARCHAR(50),
   PermissionId INT,
+  UserId INT NOT NULL,
   Approval INT NOT NULL,
   CreatedAt DATETIME NOT NULL,
   PRIMARY KEY(ItemId,PermissionId)
