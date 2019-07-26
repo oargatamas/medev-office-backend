@@ -8,8 +8,9 @@
 
 include "../vendor/autoload.php";
 
+use MedevOffice\Services\File\FileService;
 use MedevSlim\Core\Application\MedevApp;
-use Services\File\FileService;
+
 
 
 $application = MedevApp::fromJsonFile(__DIR__."/../config/config.json");
