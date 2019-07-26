@@ -6,15 +6,14 @@
  * Time: 10:42
  */
 
-namespace MedevOffice\MedevOffice\Services\File\Entities\Persistables;
+namespace MedevOffice\Services\File\Entities\Persistables;
 
 use DateTime;
 use MedevAuth\Services\Auth\OAuth\Entity\Persistables\MedooPersistable;
 use MedevOffice\Services\File\Entities;
 use Medoo\Medoo;
 
-class File implements MedooPersistable
-{
+class File implements MedooPersistable{
 
     /**
      * @param $storedData
@@ -33,7 +32,7 @@ class File implements MedooPersistable
         $file->setMimetype($storedData["FileMimeType"]);
         $file->setCreatedAt(new DateTime($storedData["FileCreatedAt"]));
         $file->setUpdatedAt(new DateTime($storedData["FileUpdatedAt"]));
-        //Todo add permissions
+        $file->setPermissions(explode(',',$storedData["Permissions"]));
 
         return $file;
     }
@@ -63,4 +62,6 @@ class File implements MedooPersistable
         ];
 
     }
+
+
 }

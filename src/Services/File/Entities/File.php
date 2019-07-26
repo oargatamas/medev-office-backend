@@ -14,6 +14,9 @@ use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
 class File extends DatabaseEntity implements \JsonSerializable
 {
+
+    const ID = "fileId";
+
     /**
      * @var string
      */
@@ -191,6 +194,16 @@ class File extends DatabaseEntity implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [];
+        return [
+            "id" => $this->getIdentifier(),
+            "name" => $this->getFilename(),
+            "type" => "file",
+            "size" => $this->getFileSize(),
+            "mimeType" => $this->getMimetype(),
+            "author" => $this->getAuthorId(),
+            "createdAt" => $this->getCreatedAt(),
+            "updatedAt" => $this->getUpdatedAt(),
+            "permissions" => $this->getPermissions()
+        ];
     }
 }

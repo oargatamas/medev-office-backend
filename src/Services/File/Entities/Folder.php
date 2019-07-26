@@ -130,12 +130,13 @@ class Folder extends DatabaseEntity implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            "Id" => $this->getIdentifier(),
-            "Type" => "folder",
-            "Name" => $this->getFoldername(),
+            "id" => $this->getIdentifier(),
+            "type" => "folder",
+            "name" => $this->getFoldername(),
             //"Author" => $this->getAuthor(),
-            "CreatedAt" => $this->getCreatedAt(),
-            "UpdatedAt" => $this->getUpdatedAt()
+            "createdAt" => $this->getCreatedAt(),
+            "updatedAt" => $this->getUpdatedAt(),
+            "permissions" => $this->getPermissions()
         ];
     }
 }

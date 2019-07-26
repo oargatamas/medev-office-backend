@@ -31,7 +31,7 @@ class Folder implements MedooPersistable
         $folder->setAuthor($storedData["FolderAuthor"]);
         $folder->setCreatedAt(new DateTime($storedData["FolderCreatedAt"]));
         $folder->setUpdatedAt(new DateTime($storedData["FolderUpdatedAt"]));
-        //Todo add permissions to here
+        $folder->setPermissions(explode(',',$storedData["Permissions"]));
 
         return $folder;
     }
@@ -57,4 +57,6 @@ class Folder implements MedooPersistable
             "FolderUpdatedAt" => Medoo::raw("<folder.UpdatedAt>"),
         ];
     }
+
+
 }
