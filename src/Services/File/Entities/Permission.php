@@ -10,14 +10,17 @@ namespace MedevOffice\Services\File\Entities;
 
 
 use DateTime;
+use JsonSerializable;
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
-class Permission extends DatabaseEntity implements \JsonSerializable
+class Permission extends DatabaseEntity implements JsonSerializable
 {
-    /**
-     * @var string
-     */
-    private $code;
+    const READ = "read";
+    const DELETE = "delete";
+    const UPDATE = "update";
+    const MOVE = "move";
+    const CREATE = "create";
+    const UPLOAD = "upload";
 
     /**
      * @var int
@@ -34,22 +37,6 @@ class Permission extends DatabaseEntity implements \JsonSerializable
      * @var DateTime
      */
     private $createdAt;
-
-    /**
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-    }
 
     /**
      * @return int
@@ -111,7 +98,7 @@ class Permission extends DatabaseEntity implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            "id" => $this->getCode(),
+            "id" => $this->getIdentifier(),
             "createdAt" => $this->getCreatedAt()
         ];
     }

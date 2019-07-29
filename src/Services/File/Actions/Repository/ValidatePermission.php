@@ -26,7 +26,7 @@ class ValidatePermission extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
-        /** @var Entities\Permission[] $requiredPermissions */
+        /** @var string[] $requiredPermissions */
         $requiredPermissions = $args[self::PERMISSIONS];
         $itemId = $args[self::ITEM_ID];
         $userId = $args[self::USER_ID];
@@ -43,7 +43,7 @@ class ValidatePermission extends APIRepositoryAction
 
         $userPermissions = [];
         foreach ($storedData as $record){
-            $userPermissions[] = Permission::fromAssocArray($record);
+            $userPermissions[] = Permission::fromAssocArray($record)->getIdentifier();
         }
 
         $commonItems = array_intersect($requiredPermissions,$userPermissions);
