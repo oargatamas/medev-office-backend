@@ -10,6 +10,7 @@ namespace MedevOffice\Services\File;
 
 
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
+use MedevOffice\Services\File\Actions\Api\Folder\UploadFileToFolder;
 use MedevSlim\Core\Service\APIService;
 use Slim\App;
 
@@ -31,6 +32,10 @@ class FileService extends APIService
      */
     protected function registerRoutes(App $app)
     {
-        $app->get("/folder/{".self::FOLDER_ID."}/content", new GetFolderContent($this));
+        $app->get("/folder/{".self::FOLDER_ID."}/content", new GetFolderContent($this))
+            ->setName($this->getServiceName());
+
+        $app->post("/folder/{".self::FOLDER_ID."}/file", new UploadFileToFolder($this))
+            ->setName($this->getServiceName());
     }
 }
