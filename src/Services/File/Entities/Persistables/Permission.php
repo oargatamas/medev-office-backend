@@ -25,8 +25,7 @@ class Permission implements MedooPersistable
     {
         $permission = new Entities\Permission();
 
-        $permission->setIdentifier($storedData["ItemId"]);
-        $permission->setCode($storedData["PermissionId"]);
+        $permission->setIdentifier($storedData["PermissionId"]);
         $permission->setUserId($storedData["UserId"]);
         $permission->setApproval($storedData["CreatedAt"]);
 
