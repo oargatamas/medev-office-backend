@@ -9,6 +9,7 @@
 namespace MedevOffice\Services\File;
 
 
+use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Folder\UploadFileToFolder;
 use MedevSlim\Core\Service\APIService;
@@ -17,6 +18,7 @@ use Slim\App;
 class FileService extends APIService
 {
     const FOLDER_ID = "folderId";
+    const FILE_ID = "file_id";
 
     /**
      * @return mixed
@@ -32,6 +34,9 @@ class FileService extends APIService
      */
     protected function registerRoutes(App $app)
     {
+        $app->get("/file/{".self::FILE_ID."}/data", new DownloadFile($this))
+            ->setName($this->getServiceName());
+
         $app->get("/folder/{".self::FOLDER_ID."}/content", new GetFolderContent($this))
             ->setName($this->getServiceName());
 
