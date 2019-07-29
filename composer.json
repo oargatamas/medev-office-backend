@@ -1,7 +1,8 @@
 {
   "require": {
     "medev-core/slim": "@dev",
-    "medev-auth/slim": "@dev"
+    "medev-auth/slim": "@dev",
+    "ext-json": "*"
   },
   "repositories": [
     {
