@@ -31,17 +31,11 @@ CREATE TABLE IF NOT EXISTS Archive_ItemHierarchy(
   PRIMARY KEY (ItemId,ParentId)
 ) ENGINE=INNODB
 
-CREATE TABLE IF NOT EXISTS Archive_Permissions(
-  Id INT,
-  Code VARCHAR(50) NOT NULL,
-  Description TEXT NULL,
-  PRIMARY KEY(Id),
-  UNIQUE(Code)
-) ENGINE=INNODB;
+
 
 CREATE TABLE IF NOT EXISTS Archive_ItemPermissions(
   ItemId VARCHAR(50),
-  PermissionId INT,
+  PermissionId VARCHAR(10),
   UserId INT NOT NULL,
   Approval INT NOT NULL,
   CreatedAt DATETIME NOT NULL,
