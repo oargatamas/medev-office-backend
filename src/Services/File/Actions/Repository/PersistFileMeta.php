@@ -29,8 +29,6 @@ class PersistFileMeta extends APIRepositoryAction
         /** @var Entities\File $file */
         $file = $args[self::FILE];
 
-        $file->setIdentifier(UUID::v4());
-
         $this->database->insert(File::getTableName(),
             [
                 "Id" => $file->getIdentifier(),
@@ -47,7 +45,5 @@ class PersistFileMeta extends APIRepositoryAction
         if(!is_null($result[2])){
             throw new InternalServerException("File data can not be saved: ".implode(" - ",$result));
         }
-
-        return $file->getIdentifier();
     }
 }

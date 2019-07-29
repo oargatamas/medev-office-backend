@@ -32,12 +32,11 @@ class GetChildFolders extends APIRepositoryAction
         $storedData = $this->database->select(Folder::getTableName()."(folder)",
             [
                 "[>]Archive_ItemHierarchy(h)" => ["folder.Id" => "ItemId"],
-                "[>]Archive_ItemPermissions(ip)" => ["folder.Id" => "ItemId"],
-                "[>]Archive_Permissions(p)" => ["ip.PermissionId" => "Id"]
+                "[>]Archive_ItemPermissions(ip)" => ["folder.Id" => "ItemId"]
             ],
             array_merge(
                 Folder::getColumnNames(),
-                ["Permissions" => Medoo::raw("GROUP_CONCAT(DISTINCT(<p.Code>))")]
+                ["Permissions" => Medoo::raw("GROUP_CONCAT(DISTINCT(<ip.PermissionId>))")]
             ),
             [
                 "AND" => [

@@ -28,10 +28,10 @@ class AssignItemToFolder extends APIRepositoryAction
         $itemId = $args[self::ITEM_ID];
         $folderId = $args[self::FOLDER_ID];
 
-        $this->database->insert("Archive_ItemHierarchy(h)",
+        $this->database->insert("Archive_ItemHierarchy",
             [
-                "h.ItemId" => $itemId,
-                "h.ParentId" => $folderId,
+                "ItemId" => $itemId,
+                "ParentId" => $folderId,
             ]);
 
 

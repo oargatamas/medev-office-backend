@@ -31,12 +31,11 @@ class GetChildFiles extends APIRepositoryAction
         $storedData = $this->database->select(File::getTableName()."(file)",
             [
                 "[>]Archive_ItemHierarchy(h)" => ["file.Id" => "ItemId"],
-                "[>]Archive_ItemPermissions(ip)" => ["file.Id" => "ItemId"],
-                "[>]Archive_Permissions(p)" => ["ip.PermissionId" => "Id"]
+                "[>]Archive_ItemPermissions(ip)" => ["file.Id" => "ItemId"]
             ],
             array_merge(
                 File::getColumnNames(),
-                ["Permissions" => Medoo::raw("GROUP_CONCAT(DISTINCT(<p.Code>))")]
+                ["Permissions" => Medoo::raw("GROUP_CONCAT(DISTINCT(<ip.PermissionId>))")]
             ),
             [
                 "AND" => [
