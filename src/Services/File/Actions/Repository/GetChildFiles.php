@@ -10,6 +10,7 @@ namespace MedevOffice\Services\File\Actions\Repository;
 
 
 use MedevOffice\Services\File\Entities\Persistables\File;
+use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Folder;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use Medoo\Medoo;
