@@ -20,8 +20,6 @@ class Permission extends DatabaseEntity implements JsonSerializable
     const UPDATE = "update";
     const MOVE = "move";
     const CREATE = "create";
-    const UPLOAD = "upload";
-
     /**
      * @var int
      */
