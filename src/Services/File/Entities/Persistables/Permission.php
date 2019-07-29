@@ -9,19 +9,28 @@
 namespace MedevOffice\Services\File\Entities\Persistables;
 
 
-use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
+use MedevOffice\Services\File\Entities;
+
 use MedevAuth\Services\Auth\OAuth\Entity\Persistables\MedooPersistable;
+use Medoo\Medoo;
 
 class Permission implements MedooPersistable
 {
 
     /**
      * @param $storedData
-     * @return DatabaseEntity
+     * @return Entities\Permission
      */
     public static function fromAssocArray($storedData)
     {
-        // TODO: Implement fromAssocArray() method.
+        $permission = new Entities\Permission();
+
+        $permission->setIdentifier($storedData["ItemId"]);
+        $permission->setCode($storedData["PermissionId"]);
+        $permission->setUserId($storedData["UserId"]);
+        $permission->setApproval($storedData["CreatedAt"]);
+
+        return $permission;
     }
 
     /**
@@ -37,6 +46,12 @@ class Permission implements MedooPersistable
      */
     public static function getColumnNames()
     {
-        // TODO: Implement getColumnNames() method.
+        return [
+            "ItemId" => Medoo::raw("<p.ItemId>"),
+            "PermissionId" => Medoo::raw("<p.Id>"),
+            "UserId" => Medoo::raw("<p.UserId>"),
+            "Approval" => Medoo::raw("<p.Approval>"),
+            "CreatedAt" => Medoo::raw("<p.CreatedAt>"),
+        ];
     }
 }
