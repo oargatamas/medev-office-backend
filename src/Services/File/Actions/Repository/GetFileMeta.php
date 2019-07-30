@@ -11,8 +11,6 @@ namespace MedevOffice\Services\File\Actions\Repository;
 use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
-use MedevSlim\Core\Service\Exceptions\UnauthorizedException;
-use Medoo\Medoo;
 
 class GetFileMeta extends APIRepositoryAction
 {
@@ -29,26 +27,13 @@ class GetFileMeta extends APIRepositoryAction
         $itemId = $args[self::FILE_ID];
         $requester = $args[self::REQUESTER];
 
-        $storedData = $this->database->get(File::getTableName() . "(file)",
-            [
-                "[>]Archive_ItemPermissions(ip)" => ["file.Id" => "ItemId"]
-            ],
-            array_merge(
-                File::getColumnNames(),
-                ["Permissions" => Medoo::raw("GROUP_CONCAT(DISTINCT(<ip.PermissionId>))")]
-            ),
-            [
-                "AND" => [
-                    "file.Id" => $itemId,
-                    "ip.UserId" => $requester
-                ],
-                "GROUP" => "file.Id"
-            ]
+        $storedData = $this->database->get(
+            File::getTableName() . "(file)",
+            File::getColumnNames(),
+            ["file.Id" => $itemId]
         );
 
-        if (!$storedData) {
-            throw new UnauthorizedException("There is no permission assigned to the user (" . $requester . ") for the file (" . $itemId . ")");
-        }
+
 
         return File::fromAssocArray($storedData);
     }
