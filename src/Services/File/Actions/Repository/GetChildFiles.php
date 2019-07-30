@@ -9,9 +9,9 @@
 namespace MedevOffice\Services\File\Actions\Repository;
 
 
-use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Folder;
+use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use Medoo\Medoo;
 
@@ -28,6 +28,7 @@ class GetChildFiles extends APIRepositoryAction
         $folderId = $args[Folder::ID];
         $userId = $args["userId"];
 
+        //Todo integrate it with the GetItemPermissions action and make the filtering here in PHP
         $storedData = $this->database->select(File::getTableName()."(file)",
             [
                 "[>]Archive_ItemHierarchy(h)" => ["file.Id" => "ItemId"],
