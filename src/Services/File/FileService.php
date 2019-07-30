@@ -9,14 +9,16 @@
 namespace MedevOffice\Services\File;
 
 
+use MedevAuth\Services\Auth\OAuth\APIProtection\Service\OAuthProtectedAPIService;
 use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Folder\UploadFileToFolder;
+use MedevOffice\Services\File\Middleware\PermissionChecker;
 use MedevSlim\Core\Application\MedevApp;
 use MedevSlim\Core\Service\APIService;
 use Slim\App;
 
-class FileService extends APIService
+class FileService extends OAuthProtectedAPIService
 {
     const FOLDER_ID = "folderId";
     const FILE_ID = "file_id";
@@ -47,6 +49,7 @@ class FileService extends APIService
     {
         $app->get("/file/{".self::FILE_ID."}/data", new DownloadFile($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,DownloadFile::getPermissionCodes()))
             ->setName(self::ROUTE_DOWNLOAD_FILE);
 
         $app->get("/folder/{".self::FOLDER_ID."}/content", new GetFolderContent($this))

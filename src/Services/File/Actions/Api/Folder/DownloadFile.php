@@ -10,13 +10,15 @@ namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
 use MedevOffice\Services\File\Actions\Repository\GetFileMeta;
+use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\FileService;
+use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use MedevSlim\Core\Service\Exceptions\BadRequestException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class DownloadFile extends APIServlet
+class DownloadFile extends APIServlet implements PermissionRestricted
 {
 
     /**
@@ -59,4 +61,13 @@ class DownloadFile extends APIServlet
     }
 
 
+    /**
+     * @return string[]
+     */
+    public static function getPermissionCodes()
+    {
+        return [
+            Permission::READ
+        ];
+    }
 }
