@@ -47,7 +47,7 @@ class GetFileMeta extends APIRepositoryAction
         );
 
         if (!$storedData) {
-            throw new UnauthorizedException("User ('" . $requester . "') has no access to download this file ('" . $itemId . "')");
+            throw new UnauthorizedException("There is no permission assigned to the user (" . $requester . ") for the file (" . $itemId . ")");
         }
 
         return File::fromAssocArray($storedData);
