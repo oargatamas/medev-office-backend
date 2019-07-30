@@ -33,8 +33,15 @@ class GetFileMeta extends APIRepositoryAction
             ["file.Id" => $itemId]
         );
 
+        $file = File::fromAssocArray($storedData);
+
+        $getPermissions = new GetItemPermissions($this->service);
+        $file->setPermissions($getPermissions->handleRequest([
+            GetItemPermissions::ITEM_ID => $file->getIdentifier(),
+            GetItemPermissions::USER_ID => $requester
+        ]));
 
 
-        return File::fromAssocArray($storedData);
+        return $file;
     }
 }
