@@ -34,6 +34,7 @@ class DownloadFile extends APIServlet
         $getFileInfo = new GetFileMeta($this->service);
         $fileInfo = $getFileInfo->handleRequest([GetFileMeta::FILE_ID => $fileId, GetFileMeta::REQUESTER => $requester]);
 
+
         $basePath = $_SERVER["DOCUMENT_ROOT"] . $this->config["application"]["drive"]["documentPath"];
         $path = $basePath . "/" . $fileInfo->getPath() . $fileInfo->getIdentifier();
 
@@ -55,13 +56,6 @@ class DownloadFile extends APIServlet
             ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
             ->withHeader('Pragma', 'public')
             ->withBody($stream);
-    }
-
-    static function getParams()
-    {
-        return [
-            "user"
-        ];
     }
 
 
