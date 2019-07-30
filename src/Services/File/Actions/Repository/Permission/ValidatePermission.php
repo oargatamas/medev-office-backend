@@ -18,9 +18,11 @@ class ValidatePermission extends APIRepositoryAction
     const PERMISSIONS = "permissions";
     const ITEM_ID = "itemId";
     const USER_ID = "userId";
+    const THROW_ERROR = "throwError";
 
     /**
      * @param $args
+     * @return bool
      * @throws UnauthorizedException
      * @throws \Exception
      */
@@ -28,6 +30,7 @@ class ValidatePermission extends APIRepositoryAction
     {
         /** @var string[] $requiredPermissions */
         $requiredPermissions = $args[self::PERMISSIONS];
+        $throwError = $args[self::THROW_ERROR] ?? false;
 
         $getPermissions = new GetItemPermissions($this->service);
 
@@ -42,7 +45,14 @@ class ValidatePermission extends APIRepositoryAction
 
         $commonItems = array_intersect($requiredPermissions,$userPermissions);
         if( $commonItems != $requiredPermissions){
-            throw new UnauthorizedException("User has not enough permission to execute command. Required permission : [".implode($requiredPermissions,',')."], User permission: [". implode($userPermissions,',')."]");
+            $msg = "User has not enough permission to execute command. Required permission : [".implode($requiredPermissions,',')."], User permission: [". implode($userPermissions,',')."]";
+            if($throwError){
+                throw new UnauthorizedException($msg);
+            }else{
+                $this->error($msg);
+                return false;
+            }
         }
+        return true;
     }
 }

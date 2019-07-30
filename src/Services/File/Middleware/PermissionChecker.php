@@ -11,7 +11,7 @@ namespace MedevOffice\Services\File\Middleware;
 
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
-use MedevOffice\Services\File\Actions\Repository\ValidatePermission;
+use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
 use MedevOffice\Services\File\FileService;
 use MedevSlim\Core\Service\APIService;
 use Slim\Http\Request;
@@ -59,7 +59,8 @@ class PermissionChecker
         (new ValidatePermission($this->service))->handleRequest([
             ValidatePermission::USER_ID => $userId,
             ValidatePermission::ITEM_ID => $itemId,
-            ValidatePermission::PERMISSIONS => $this->requiredPermissions
+            ValidatePermission::PERMISSIONS => $this->requiredPermissions,
+            ValidatePermission::THROW_ERROR => true
         ]);
 
         return $next($request, $response);
