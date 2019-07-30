@@ -6,7 +6,7 @@
  * Time: 11:15
  */
 
-namespace MedevOffice\Services\File\Actions\Repository;
+namespace MedevOffice\Services\File\Actions\Repository\File;
 
 
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;

@@ -9,16 +9,10 @@
 namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
-use DateTime;
-use MedevOffice\Services\File\Actions\Repository\AssignItemToFolder;
-use MedevOffice\Services\File\Actions\Repository\PersistFileMeta;
-use MedevOffice\Services\File\Actions\Repository\SaveFile;
-use MedevOffice\Services\File\Actions\Repository\SaveFileToDisk;
-use MedevOffice\Services\File\Entities\File;
+use MedevOffice\Services\File\Actions\Repository\File\SaveFile;
 use MedevOffice\Services\File\FileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use MedevSlim\Core\Service\Exceptions\BadRequestException;
-use MedevSlim\Utils\UUID\UUID;
 use Psr\Http\Message\UploadedFileInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;

@@ -6,7 +6,7 @@
  * Time: 15:51
  */
 
-namespace MedevOffice\Services\File\Actions\Repository;
+namespace MedevOffice\Services\File\Actions\Repository\Folder;
 
 
 use MedevOffice\Services\File\Entities;

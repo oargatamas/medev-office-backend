@@ -6,7 +6,7 @@
  * Time: 14:16
  */
 
-namespace MedevOffice\Services\File\Actions\Repository;
+namespace MedevOffice\Services\File\Actions\Repository\Permission;
 
 
 use DateTime;

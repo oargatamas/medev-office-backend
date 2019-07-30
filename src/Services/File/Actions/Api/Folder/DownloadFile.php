@@ -11,7 +11,7 @@ namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
-use MedevOffice\Services\File\Actions\Repository\GetFileMeta;
+use MedevOffice\Services\File\Actions\Repository\File\GetFileMeta;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\FileService;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;

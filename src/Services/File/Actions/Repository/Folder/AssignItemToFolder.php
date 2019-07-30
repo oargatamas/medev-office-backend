@@ -6,10 +6,9 @@
  * Time: 13:09
  */
 
-namespace MedevOffice\Services\File\Actions\Repository;
+namespace MedevOffice\Services\File\Actions\Repository\Folder;
 
 
-use MedevOffice\Services\File\Entities\Persistables\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\InternalServerException;
 

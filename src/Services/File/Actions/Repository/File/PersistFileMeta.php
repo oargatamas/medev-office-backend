@@ -6,14 +6,13 @@
  * Time: 11:38
  */
 
-namespace MedevOffice\Services\File\Actions\Repository;
+namespace MedevOffice\Services\File\Actions\Repository\File;
 
 
 use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\InternalServerException;
-use MedevSlim\Utils\UUID\UUID;
 
 class PersistFileMeta extends APIRepositoryAction
 {

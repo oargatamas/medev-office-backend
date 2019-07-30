@@ -9,8 +9,9 @@
 namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
-use MedevOffice\Services\File\Actions\Repository\GetChildFiles;
-use MedevOffice\Services\File\Actions\Repository\GetChildFolders;
+
+use MedevOffice\Services\File\Actions\Repository\Folder\GetChildFiles;
+use MedevOffice\Services\File\Actions\Repository\Folder\GetChildFolders;
 use MedevOffice\Services\File\Entities\Folder;
 use MedevOffice\Services\File\FileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
