@@ -20,7 +20,6 @@ class PersistFileMeta extends APIRepositoryAction
 
     /**
      * @param $args
-     * @return string
      * @throws InternalServerException
      */
     public function handleRequest($args = [])

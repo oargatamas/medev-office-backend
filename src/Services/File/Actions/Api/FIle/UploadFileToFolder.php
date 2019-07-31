@@ -6,7 +6,7 @@
  * Time: 12:43
  */
 
-namespace MedevOffice\Services\File\Actions\Api\Folder;
+namespace MedevOffice\Services\File\Actions\Api\File;
 
 
 use MedevOffice\Services\File\Actions\Repository\File\SaveFile;

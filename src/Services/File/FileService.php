@@ -13,10 +13,10 @@ use MedevAuth\Services\Auth\OAuth\APIProtection\Service\OAuthProtectedAPIService
 use MedevOffice\Services\File\Actions\Api\DeleteItem;
 use MedevOffice\Services\File\Actions\Api\FIle\EditFile;
 use MedevOffice\Services\File\Actions\Api\FIle\MoveItem;
+use MedevOffice\Services\File\Actions\Api\File\UploadFileToFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\CreateFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
-use MedevOffice\Services\File\Actions\Api\Folder\UploadFileToFolder;
 use MedevOffice\Services\File\Actions\Api\Permission\GrantPermission;
 use MedevOffice\Services\File\Actions\Api\Permission\RemovePermission;
 use MedevOffice\Services\File\Middleware\PermissionChecker;

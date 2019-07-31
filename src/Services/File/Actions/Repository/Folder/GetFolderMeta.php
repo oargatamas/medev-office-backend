@@ -26,7 +26,7 @@ class GetFolderMeta extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
-        $itemId = $args[self::FOLDER_IDs];
+        $itemId = $args[self::FOLDER_ID];
         $requester = $args[self::REQUESTER];
 
         $storedData = $this->database->get(

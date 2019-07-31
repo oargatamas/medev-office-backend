@@ -19,7 +19,6 @@ class SaveFileToDisk extends APIRepositoryAction
 
     /**
      * @param $args
-     * @return mixed
      */
     public function handleRequest($args = [])
     {
