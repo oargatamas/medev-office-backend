@@ -16,7 +16,7 @@ use MedevOffice\Services\File\Actions\Repository\Folder\MoveItemToFolder;
 use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
-use MedevOffice\Services\File\OfficeDriveService;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -36,8 +36,8 @@ class MoveItem extends APIServlet implements PermissionRestricted
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
         $requester = $authToken->getUser()->getIdentifier();
-        $itemId = $args[OfficeDriveService::FILE_ID];
-        $folderId = $args[OfficeDriveService::FOLDER_ID];
+        $itemId = $args[OfficeFileService::FILE_ID];
+        $folderId = $args[OfficeFileService::FOLDER_ID];
 
         $getFolderInfo = (new GetFolderMeta($this->service));
         $folderInfo = $getFolderInfo->handleRequest([GetFolderMeta::FOLDER_ID => $itemId, GetFolderMeta::REQUESTER => $requester]);

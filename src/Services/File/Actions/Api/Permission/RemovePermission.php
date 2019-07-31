@@ -12,7 +12,7 @@ namespace MedevOffice\Services\File\Actions\Api\Permission;
 use MedevOffice\Services\File\Actions\Repository\Permission\RemoveItemPermission;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
-use MedevOffice\Services\File\OfficeDriveService;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -29,7 +29,7 @@ class RemovePermission extends APIServlet implements PermissionRestricted
      */
     public function handleRequest(Request $request, Response $response, $args)
     {
-        $itemId = $args[OfficeDriveService::FILE_ID];
+        $itemId = $args[OfficeFileService::FILE_ID];
         $requestBody = $request->getParsedBody();
 
         $userId = $requestBody["toUser"];

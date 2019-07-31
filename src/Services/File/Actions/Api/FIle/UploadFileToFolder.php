@@ -12,7 +12,7 @@ namespace MedevOffice\Services\File\Actions\Api\File;
 use MedevOffice\Services\File\Actions\Repository\File\SaveFile;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
-use MedevOffice\Services\File\OfficeDriveService;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use MedevSlim\Core\Service\Exceptions\BadRequestException;
 use Psr\Http\Message\UploadedFileInterface;
@@ -32,7 +32,7 @@ class UploadFileToFolder extends APIServlet implements PermissionRestricted
     public function handleRequest(Request $request, Response $response, $args)
     {
         $authorId = $request->getParam("authorId");
-        $folderId = $args[OfficeDriveService::FOLDER_ID];
+        $folderId = $args[OfficeFileService::FOLDER_ID];
         /** @var UploadedFileInterface $uploadedItem */
         $uploadedItem = $request->getUploadedFiles()["fileItem"];
 

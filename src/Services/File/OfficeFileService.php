@@ -25,7 +25,7 @@ use MedevSlim\Core\Application\MedevApp;
 use MedevSlim\Core\Service\APIService;
 use Slim\App;
 
-class OfficeDriveService extends OAuthProtectedAPIService
+class OfficeFileService extends OAuthProtectedAPIService
 {
     const FOLDER_ID = "folderId";
     const FILE_ID = "file_id";

@@ -16,7 +16,7 @@ use MedevOffice\Services\File\Actions\Repository\Folder\AddFolder;
 use MedevOffice\Services\File\Entities\Folder;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
-use MedevOffice\Services\File\OfficeDriveService;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use MedevSlim\Utils\UUID\UUID;
 use Slim\Http\Request;
@@ -37,7 +37,7 @@ class CreateFolder extends APIServlet implements PermissionRestricted
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
 
-        $parentFolder = $args[OfficeDriveService::FOLDER_ID];
+        $parentFolder = $args[OfficeFileService::FOLDER_ID];
         $requestBody = $request->getParsedBody();
         $author = $authToken->getUser();
         $now = new DateTime();

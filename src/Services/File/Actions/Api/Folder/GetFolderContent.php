@@ -21,7 +21,7 @@ use MedevOffice\Services\File\Entities\DriveEntity;
 use MedevOffice\Services\File\Entities\Folder;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
-use MedevOffice\Services\File\OfficeDriveService;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -42,7 +42,7 @@ class GetFolderContent extends APIServlet implements PermissionRestricted
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
         $userId = $authToken->getUser()->getIdentifier();
-        $folderId = $args[OfficeDriveService::FOLDER_ID];
+        $folderId = $args[OfficeFileService::FOLDER_ID];
 
         $getFolders = new GetChildFolders($this->service);
         $folders = $getFolders->handleRequest([Folder::ID => $folderId]);

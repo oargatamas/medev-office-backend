@@ -14,7 +14,7 @@ use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\File\GetFileMeta;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
-use MedevOffice\Services\File\OfficeDriveService;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use MedevSlim\Core\Service\Exceptions\BadRequestException;
 use Slim\Http\Request;
@@ -34,7 +34,7 @@ class DownloadFile extends APIServlet implements PermissionRestricted
     {
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
-        $fileId = $args[OfficeDriveService::FILE_ID];
+        $fileId = $args[OfficeFileService::FILE_ID];
         $requester = $authToken->getUser()->getIdentifier();
 
         $getFileInfo = new GetFileMeta($this->service);
