@@ -68,7 +68,7 @@ class MoveItem extends APIServlet implements PermissionRestricted
     public static function getPermissionCodes()
     {
         //Only the movable item permission will be checked by this logic
-        //new parent folder read permission
+        //new parent folder create and read  permissions will be validated in the action body
         return [
             Permission::READ,
             Permission::MOVE
