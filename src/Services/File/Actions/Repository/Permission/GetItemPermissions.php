@@ -8,7 +8,6 @@
 
 namespace MedevOffice\Services\File\Actions\Repository\Permission;
 
-use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Persistables\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\InternalServerException;
@@ -20,7 +19,7 @@ class GetItemPermissions extends APIRepositoryAction
 
     /**
      * @param $args
-     * @return Entities\Permission[]
+     * @return array(Entities\Permission[])
      * @throws \Exception
      */
     public function handleRequest($args = [])

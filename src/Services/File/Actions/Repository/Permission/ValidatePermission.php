@@ -41,7 +41,7 @@ class ValidatePermission extends APIRepositoryAction
 
         $userPermissions = array_map(function(Entities\Permission $permission){
             return $permission->getIdentifier();
-        },$userPermissions);
+        },$userPermissions[$args[self::ITEM_ID]]);
 
         $commonItems = array_intersect($requiredPermissions,$userPermissions);
         if( $commonItems != $requiredPermissions){
