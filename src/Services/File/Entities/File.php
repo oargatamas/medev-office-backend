@@ -10,9 +10,8 @@ namespace MedevOffice\Services\File\Entities;
 
 
 use DateTime;
-use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
-class File extends DatabaseEntity implements \JsonSerializable
+class File extends DriveEntity implements \JsonSerializable
 {
 
     const ID = "fileId";
@@ -51,11 +50,6 @@ class File extends DatabaseEntity implements \JsonSerializable
      * @var DateTime
      */
     private $updatedAt;
-
-    /**
-     * @var Permission[]
-     */
-    private $permissions;
 
     /**
      * @return string
@@ -167,22 +161,6 @@ class File extends DatabaseEntity implements \JsonSerializable
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return Permission[]
-     */
-    public function getPermissions()
-    {
-        return $this->permissions;
-    }
-
-    /**
-     * @param Permission[] $permissions
-     */
-    public function setPermissions($permissions)
-    {
-        $this->permissions = $permissions;
     }
 
     /**
