@@ -9,6 +9,8 @@
 namespace MedevOffice\Services\File\Actions\Repository\File;
 
 
+use MedevOffice\Services\File\Actions\Repository\Folder\AssignItemToFolder;
+use MedevOffice\Services\File\Actions\Repository\Permission\AddItemPermission;
 use MedevOffice\Services\File\Entities\File;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
@@ -69,7 +71,9 @@ class SaveFile extends APIRepositoryAction
                     Permission::READ,
                     Permission::DELETE,
                     Permission::UPDATE,
-                    Permission::MOVE
+                    Permission::MOVE,
+                    Permission::ADD_GRANT,
+                    Permission::REMOVE_GRANT
                 ],
             ]);
         });
