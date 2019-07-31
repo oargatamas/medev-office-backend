@@ -13,7 +13,6 @@ use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Folder;
 use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
-use Medoo\Medoo;
 
 class GetChildFiles extends APIRepositoryAction
 {
@@ -26,25 +25,11 @@ class GetChildFiles extends APIRepositoryAction
     public function handleRequest($args = [])
     {
         $folderId = $args[Folder::ID];
-        $userId = $args["userId"];
 
-        //Todo integrate it with the GetItemPermissions action and make the filtering here in PHP
         $storedData = $this->database->select(File::getTableName()."(file)",
-            [
-                "[>]Archive_ItemHierarchy(h)" => ["file.Id" => "ItemId"],
-                "[>]Archive_ItemPermissions(ip)" => ["file.Id" => "ItemId"]
-            ],
-            array_merge(
-                File::getColumnNames(),
-                ["Permissions" => Medoo::raw("GROUP_CONCAT(DISTINCT(<ip.PermissionId>))")]
-            ),
-            [
-                "AND" => [
-                    "h.ParentId" => $folderId,
-                    "ip.UserId" => $userId
-                ],
-                "GROUP" => "file.Id"
-            ]
+            ["[>]Archive_ItemHierarchy(h)" => ["file.Id" => "ItemId"]],
+            File::getColumnNames(),
+            ["h.ParentId" => $folderId]
         );
 
         $childItems = [];
