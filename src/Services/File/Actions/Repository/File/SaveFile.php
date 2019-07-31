@@ -67,14 +67,7 @@ class SaveFile extends APIRepositoryAction
                 AddItemPermission::ITEM_ID => $file->getIdentifier(),
                 AddItemPermission::USER_ID => $authorId,
                 AddItemPermission::APPROVAL_ID => $authorId,
-                AddItemPermission::PERMISSIONS => [
-                    Permission::READ,
-                    Permission::DELETE,
-                    Permission::UPDATE,
-                    Permission::MOVE,
-                    Permission::ADD_GRANT,
-                    Permission::REMOVE_GRANT
-                ],
+                AddItemPermission::PERMISSIONS => Permission::ALL,
             ]);
         });
 

@@ -11,6 +11,7 @@ namespace MedevOffice\Services\File\Actions\Repository\Folder;
 
 use MedevOffice\Services\File\Entities\Persistables\Folder;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
+use MedevSlim\Core\Database\Medoo\MedooDatabase;
 use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
 class PersistFolderMeta extends APIRepositoryAction
@@ -31,8 +32,8 @@ class PersistFolderMeta extends APIRepositoryAction
                 "Id" => $folder->getIdentifier(),
                 "FolderName" => $folder->getFoldername(),
                 "Author" => $folder->getAuthor(),
-                "CreatedAt" => $folder->getCreatedAt(),
-                "UpdatedAt" => $folder->getUpdatedAt(),
+                "CreatedAt" => $folder->getCreatedAt()->format(MedooDatabase::DEFAULT_DATE_FORMAT),
+                "UpdatedAt" => $folder->getUpdatedAt()->format(MedooDatabase::DEFAULT_DATE_FORMAT),
             ]
         );
 

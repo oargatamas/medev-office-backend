@@ -12,6 +12,7 @@ namespace MedevOffice\Services\File\Actions\Repository\File;
 use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
+use MedevSlim\Core\Database\Medoo\MedooDatabase;
 use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
 class PersistFileMeta extends APIRepositoryAction
@@ -35,8 +36,8 @@ class PersistFileMeta extends APIRepositoryAction
                 "SizeInBytes" => $file->getFileSize(),
                 "Path" => $file->getPath(),
                 "MimeType" => $file->getMimetype(),
-                "CreatedAt" => $file->getCreatedAt(),
-                "UpdatedAt" => $file->getUpdatedAt(),
+                "CreatedAt" => $file->getCreatedAt()->format(MedooDatabase::DEFAULT_DATE_FORMAT),
+                "UpdatedAt" => $file->getUpdatedAt()->format(MedooDatabase::DEFAULT_DATE_FORMAT),
             ]);
 
         $result = $this->database->error();
