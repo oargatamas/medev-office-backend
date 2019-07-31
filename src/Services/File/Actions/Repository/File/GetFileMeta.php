@@ -8,6 +8,7 @@
 
 namespace MedevOffice\Services\File\Actions\Repository\File;
 
+use MedevOffice\Services\File\Actions\Repository\Permission\GetItemPermissions;
 use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
