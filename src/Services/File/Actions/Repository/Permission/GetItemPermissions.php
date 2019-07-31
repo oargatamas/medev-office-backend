@@ -25,14 +25,14 @@ class GetItemPermissions extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
-        $itemId = $args[self::ITEM_ID];
+        $itemIds = $args[self::ITEM_ID];
         $userId = $args[self::USER_ID];
 
         $storedData = $this->database->select(Permission::getTableName()."(p)",
             Permission::getColumnNames(),
             [
                 "AND" => [
-                    "p.ItemId" => $itemId,
+                    "p.ItemId" => $itemIds,
                     "p.UserId" => $userId
                 ]
             ]
@@ -43,11 +43,11 @@ class GetItemPermissions extends APIRepositoryAction
             throw new InternalServerException("Permissions can not queried. ".implode(" - ",$result));
         }
 
-        $userPermissions = [];
+        $permissionsOfUser = [];
         foreach ($storedData as $record){
-            $userPermissions[] = Permission::fromAssocArray($record);
+            $permissionsOfUser[$record["ItemId"]][] = Permission::fromAssocArray($record);
         }
 
-        return $userPermissions;
+        return $permissionsOfUser;
     }
 }
