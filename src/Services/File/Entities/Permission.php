@@ -23,6 +23,16 @@ class Permission extends DatabaseEntity implements JsonSerializable
     const ADD_GRANT = "add-grant";
     const REMOVE_GRANT = "remove-grant";
 
+    const ALL = [
+        self::READ,
+        self::DELETE,
+        self::UPDATE,
+        self::CREATE,
+        self::MOVE,
+        self::ADD_GRANT,
+        self::REMOVE_GRANT
+    ];
+
     /**
      * @var int
      */

@@ -12,6 +12,7 @@ namespace MedevOffice\Services\File;
 use MedevAuth\Services\Auth\OAuth\APIProtection\Service\OAuthProtectedAPIService;
 use MedevOffice\Services\File\Actions\Api\DeleteItem;
 use MedevOffice\Services\File\Actions\Api\FIle\MoveItem;
+use MedevOffice\Services\File\Actions\Api\Folder\CreateFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Folder\UploadFileToFolder;
@@ -33,6 +34,7 @@ class FileService extends OAuthProtectedAPIService
     const ROUTE_MOVE_ITEM = "moveItem";
     const ROUTE_GRANT = "grant";
     const ROUTE_REMOVE_GRANT = "removeGrant";
+    const ROUTE_CREATE_FOLDER = "createFolder";
 
 
     public function __construct(MedevApp $app)
@@ -90,6 +92,11 @@ class FileService extends OAuthProtectedAPIService
         $app->delete("/file/{".self::FILE_ID."}", new DeleteItem($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,DeleteItem::getPermissionCodes()))
+            ->setName(self::ROUTE_REMOVE_GRANT);
+
+        $app->post("/folder/{".self::FOLDER_ID."}/folder", new CreateFolder($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,CreateFolder::getPermissionCodes()))
             ->setName(self::ROUTE_REMOVE_GRANT);
     }
 }
