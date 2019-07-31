@@ -13,7 +13,7 @@ use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\Permission\GetItemPermissions;
 use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
-use MedevOffice\Services\File\FileService;
+use MedevOffice\Services\File\OfficeDriveService;
 use MedevSlim\Core\Service\APIService;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -55,7 +55,7 @@ class PermissionChecker
         $routeArgs = $request->getAttribute("routeInfo")[2];
 
         $userId = $authToken->getUser()->getIdentifier();
-        $itemId = $routeArgs[FileService::FILE_ID] ?? $routeArgs[FileService::FOLDER_ID];
+        $itemId = $routeArgs[OfficeDriveService::FILE_ID] ?? $routeArgs[OfficeDriveService::FOLDER_ID];
 
         $getPermissions = new GetItemPermissions($this->service);
 

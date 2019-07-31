@@ -14,8 +14,8 @@ use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderMeta;
 use MedevOffice\Services\File\Actions\Repository\Folder\UpdateFolderMeta;
 use MedevOffice\Services\File\Entities\Permission;
-use MedevOffice\Services\File\FileService;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
+use MedevOffice\Services\File\OfficeDriveService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -34,7 +34,7 @@ class EditFolder extends APIServlet implements PermissionRestricted
     {
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
-        $folderId = $args[FileService::FOLDER_ID];
+        $folderId = $args[OfficeDriveService::FOLDER_ID];
         $requestBody = $request->getParsedBody();
 
         $getFileInfo = new GetFolderMeta($this->service);
