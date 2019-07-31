@@ -10,14 +10,16 @@ namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
 use MedevOffice\Services\File\Actions\Repository\File\SaveFile;
+use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\FileService;
+use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use MedevSlim\Core\Service\Exceptions\BadRequestException;
 use Psr\Http\Message\UploadedFileInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class UploadFileToFolder extends APIServlet
+class UploadFileToFolder extends APIServlet implements PermissionRestricted
 {
 
     /**
@@ -53,5 +55,16 @@ class UploadFileToFolder extends APIServlet
         ];
 
         return $response->withJson($data,201);
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getPermissionCodes()
+    {
+        return [
+            Permission::READ,
+            Permission::CREATE
+        ];
     }
 }
