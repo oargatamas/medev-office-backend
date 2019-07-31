@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Archive_Files(
 CREATE TABLE IF NOT EXISTS Archive_ItemHierarchy(
   ItemId VARCHAR(50),
   ParentId VARCHAR(50),
-  PRIMARY KEY (ItemId,ParentId)
+  PRIMARY KEY (ItemId)
 ) ENGINE=INNODB
 
 
