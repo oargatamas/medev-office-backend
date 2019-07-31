@@ -10,6 +10,7 @@ namespace MedevOffice\Services\File;
 
 
 use MedevAuth\Services\Auth\OAuth\APIProtection\Service\OAuthProtectedAPIService;
+use MedevOffice\Services\File\Actions\Api\FIle\MoveItem;
 use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Folder\UploadFileToFolder;
@@ -26,6 +27,7 @@ class FileService extends OAuthProtectedAPIService
     const ROUTE_DOWNLOAD_FILE = "downloadFile";
     const ROUTE_GET_FOLDER_CONTENT = "getfolderContent";
     const ROUTE_UPLOAD_FILE = "uploadFile";
+    const ROUTE_MOVE_ITEM = "moveItem";
 
 
     public function __construct(MedevApp $app)
@@ -59,5 +61,10 @@ class FileService extends OAuthProtectedAPIService
         $app->post("/folder/{".self::FOLDER_ID."}/file", new UploadFileToFolder($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->setName(self::ROUTE_UPLOAD_FILE);
+
+        $app->post("/move/{".self::FILE_ID."}/to/{".self::FOLDER_ID."}", new MoveItem($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,DownloadFile::getPermissionCodes()))
+            ->setName(self::ROUTE_MOVE_ITEM);
     }
 }
