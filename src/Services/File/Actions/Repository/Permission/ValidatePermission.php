@@ -9,15 +9,15 @@
 namespace MedevOffice\Services\File\Actions\Repository\Permission;
 
 
-use MedevOffice\Services\File\Entities;
+use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
+use MedevOffice\Services\File\Entities\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\UnauthorizedException;
 
 class ValidatePermission extends APIRepositoryAction
 {
-    const PERMISSIONS = "permissions";
-    const ITEM_ID = "itemId";
-    const USER_ID = "userId";
+    const PERMISSIONS = "requiredPermissions";
+    const ITEM_PERMISSIONS = "itemPermissions";
     const THROW_ERROR = "throwError";
 
     /**
@@ -28,20 +28,16 @@ class ValidatePermission extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
+
+        /** @var Permission[] $userPermissions */
+        $userPermissions = $args[self::ITEM_PERMISSIONS];
         /** @var string[] $requiredPermissions */
         $requiredPermissions = $args[self::PERMISSIONS];
         $throwError = $args[self::THROW_ERROR] ?? false;
 
-        $getPermissions = new GetItemPermissions($this->service);
-
-        $userPermissions = $getPermissions->handleRequest([
-           GetItemPermissions::USER_ID =>  $args[self::USER_ID],
-           GetItemPermissions::ITEM_ID =>  $args[self::ITEM_ID],
-        ]);
-
-        $userPermissions = array_map(function(Entities\Permission $permission){
-            return $permission->getIdentifier();
-        },$userPermissions[$args[self::ITEM_ID]]);
+        $userPermissions = array_map(function(DatabaseEntity $entity){
+            return $entity->getIdentifier();
+        },$userPermissions);
 
         $commonItems = array_intersect($requiredPermissions,$userPermissions);
         if( $commonItems != $requiredPermissions){
