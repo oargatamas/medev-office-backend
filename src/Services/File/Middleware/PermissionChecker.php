@@ -11,6 +11,7 @@ namespace MedevOffice\Services\File\Middleware;
 
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
+use MedevOffice\Services\File\Actions\Repository\Permission\GetItemPermissions;
 use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
 use MedevOffice\Services\File\FileService;
 use MedevSlim\Core\Service\APIService;
@@ -56,9 +57,15 @@ class PermissionChecker
         $userId = $authToken->getUser()->getIdentifier();
         $itemId = $routeArgs[FileService::FILE_ID] ?? $routeArgs[FileService::FOLDER_ID];
 
+        $getPermissions = new GetItemPermissions($this->service);
+
+        $permissions = $getPermissions->handleRequest([
+            GetItemPermissions::USER_ID => $userId,
+            GetItemPermissions::ITEM_ID => $itemId
+        ]);
+
         (new ValidatePermission($this->service))->handleRequest([
-            ValidatePermission::USER_ID => $userId,
-            ValidatePermission::ITEM_ID => $itemId,
+            ValidatePermission::ITEM_PERMISSIONS => $permissions[$itemId],
             ValidatePermission::PERMISSIONS => $this->requiredPermissions,
             ValidatePermission::THROW_ERROR => true
         ]);
