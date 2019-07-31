@@ -10,6 +10,7 @@ namespace MedevOffice\Services\File;
 
 
 use MedevAuth\Services\Auth\OAuth\APIProtection\Service\OAuthProtectedAPIService;
+use MedevOffice\Services\File\Actions\Api\DeleteItem;
 use MedevOffice\Services\File\Actions\Api\FIle\MoveItem;
 use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
@@ -79,6 +80,16 @@ class FileService extends OAuthProtectedAPIService
         $app->delete("/{".self::FILE_ID."}/permission", new RemovePermission($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,RemovePermission::getPermissionCodes()))
+            ->setName(self::ROUTE_REMOVE_GRANT);
+
+        $app->delete("/folder/{".self::FILE_ID."}", new DeleteItem($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,DeleteItem::getPermissionCodes()))
+            ->setName(self::ROUTE_REMOVE_GRANT);
+
+        $app->delete("/file/{".self::FILE_ID."}", new DeleteItem($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,DeleteItem::getPermissionCodes()))
             ->setName(self::ROUTE_REMOVE_GRANT);
     }
 }
