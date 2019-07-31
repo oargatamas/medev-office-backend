@@ -8,15 +8,14 @@
 
 include "../vendor/autoload.php";
 
-use MedevOffice\Services\File\FileService;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Application\MedevApp;
-
 
 
 $application = MedevApp::fromJsonFile(__DIR__."/../config/config.json");
 
 
-$fileService = new FileService($application);
+$fileService = new OfficeFileService($application);
 $fileService->registerService("/drive");
 
 
