@@ -16,6 +16,7 @@ use MedevOffice\Services\File\Actions\Api\FIle\MoveItem;
 use MedevOffice\Services\File\Actions\Api\File\UploadFileToFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\CreateFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
+use MedevOffice\Services\File\Actions\Api\Folder\EditFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Permission\GrantPermission;
 use MedevOffice\Services\File\Actions\Api\Permission\RemovePermission;
@@ -39,6 +40,7 @@ class FileService extends OAuthProtectedAPIService
     const ROUTE_REMOVE_FOLDER = "removeFolder";
     const ROUTE_CREATE_FOLDER = "createFolder";
     const ROUTE_EDIT_FILE = "editFile";
+    const ROUTE_EDIT_FOLDER = "editFolder";
 
 
     public function __construct(MedevApp $app)
@@ -107,5 +109,10 @@ class FileService extends OAuthProtectedAPIService
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,EditFile::getPermissionCodes()))
             ->setName(self::ROUTE_EDIT_FILE);
+
+        $app->post("/folder/{".self::FOLDER_ID."}", new EditFolder($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,EditFolder::getPermissionCodes()))
+            ->setName(self::ROUTE_EDIT_FOLDER);
     }
 }
