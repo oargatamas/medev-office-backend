@@ -49,14 +49,6 @@ class OfficeFileService extends OAuthProtectedAPIService
     }
 
     /**
-     * @return mixed
-     */
-    public function getServiceName()
-    {
-        return "FileManagementService";
-    }
-
-    /**
      * @param App $app
      * @throws \Exception
      */
