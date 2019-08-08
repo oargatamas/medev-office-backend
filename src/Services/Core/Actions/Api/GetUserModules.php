@@ -13,7 +13,7 @@ use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetUserApplications extends APIServlet
+class GetUserModules extends APIServlet
 {
 
     /**
@@ -26,9 +26,14 @@ class GetUserApplications extends APIServlet
     {
 
         $data = [
-            "state" => "success"
+            "modules" => [
+                "drive" => [
+                    "enabled" => true
+                ]
+            ]
         ];
 
-        return $response->withJson($data,200);
+        return $response
+            ->withJson($data,200);
     }
 }
