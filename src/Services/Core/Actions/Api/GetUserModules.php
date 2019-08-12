@@ -27,6 +27,9 @@ class GetUserModules extends APIServlet
 
         $data = [
             "modules" => [
+                "dashboard" => [
+                    "enabled" => true
+                ],
                 "drive" => [
                     "enabled" => true
                 ]
@@ -34,6 +37,6 @@ class GetUserModules extends APIServlet
         ];
 
         return $response
-            ->withJson($data,200);
+            ->withJson($data, 200);
     }
 }
