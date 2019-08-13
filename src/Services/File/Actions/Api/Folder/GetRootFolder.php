@@ -10,13 +10,11 @@ namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
 use MedevOffice\Services\File\Actions\Repository\Folder\GetRootFolderId;
-use MedevOffice\Services\File\Entities\Permission;
-use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetRootFolder extends APIServlet implements PermissionRestricted
+class GetRootFolder extends APIServlet
 {
 
     /**
@@ -38,12 +36,4 @@ class GetRootFolder extends APIServlet implements PermissionRestricted
         return $response->withJson($data,200);
     }
 
-
-    /**
-     * @return string[]
-     */
-    public static function getPermissionCodes()
-    {
-        return [Permission::READ];
-    }
 }

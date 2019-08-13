@@ -63,7 +63,6 @@ class OfficeFileService extends OAuthProtectedAPIService
 
         $app->get("/folder/root", new GetRootFolder($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
-            ->add(new PermissionChecker($this,GetRootFolder::getPermissionCodes()))
             ->setName(self::ROUTE_GET_ROOT_FOLDER);
 
         $app->get("/folder/{".self::FOLDER_ID."}/content", new GetFolderContent($this))
