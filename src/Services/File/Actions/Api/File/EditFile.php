@@ -6,7 +6,7 @@
  * Time: 14:00
  */
 
-namespace MedevOffice\Services\File\Actions\Api\FIle;
+namespace MedevOffice\Services\File\Actions\Api\File;
 
 
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
