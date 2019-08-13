@@ -27,10 +27,12 @@ class GetUserModules extends APIServlet
 
         $data = [
             "modules" => [
-                "dashboard" => [
+                [
+                    "name" => "dashboard",
                     "enabled" => true
                 ],
-                "drive" => [
+                [
+                    "name" => "drive",
                     "enabled" => true
                 ]
             ]
