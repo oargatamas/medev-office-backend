@@ -31,9 +31,9 @@ class GetFolderMeta extends APIRepositoryAction
         $requester = $args[self::REQUESTER];
 
         $storedData = $this->database->get(
-            Folder::getTableName() . "(file)",
+            Folder::getTableName() . "(folder)",
             Folder::getColumnNames(),
-            ["file.Id" => $itemId]
+            ["folder.Id" => $itemId]
         );
 
         $result = $this->database->error();
