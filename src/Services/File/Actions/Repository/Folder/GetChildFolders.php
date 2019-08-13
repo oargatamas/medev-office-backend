@@ -12,6 +12,7 @@ namespace MedevOffice\Services\File\Actions\Repository\Folder;
 use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Persistables\Folder;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
+use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
 class GetChildFolders extends APIRepositoryAction
 {
