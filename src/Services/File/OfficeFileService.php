@@ -18,6 +18,7 @@ use MedevOffice\Services\File\Actions\Api\Folder\CreateFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\EditFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
+use MedevOffice\Services\File\Actions\Api\Folder\GetRootFolder;
 use MedevOffice\Services\File\Actions\Api\Permission\GrantPermission;
 use MedevOffice\Services\File\Actions\Api\Permission\RemovePermission;
 use MedevOffice\Services\File\Middleware\PermissionChecker;
@@ -31,7 +32,8 @@ class OfficeFileService extends OAuthProtectedAPIService
     const FILE_ID = "file_id";
 
     const ROUTE_DOWNLOAD_FILE = "downloadFile";
-    const ROUTE_GET_FOLDER_CONTENT = "getfolderContent";
+    const ROUTE_GET_ROOT_FOLDER = "getRootFolder";
+    const ROUTE_GET_FOLDER_CONTENT = "getFolderContent";
     const ROUTE_UPLOAD_FILE = "uploadFile";
     const ROUTE_MOVE_ITEM = "moveItem";
     const ROUTE_GRANT = "grant";
@@ -59,12 +61,19 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->add(new PermissionChecker($this,DownloadFile::getPermissionCodes()))
             ->setName(self::ROUTE_DOWNLOAD_FILE);
 
+        $app->get("/folder/root", new GetRootFolder($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,GetRootFolder::getPermissionCodes()))
+            ->setName(self::ROUTE_GET_ROOT_FOLDER);
+
         $app->get("/folder/{".self::FOLDER_ID."}/content", new GetFolderContent($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,GetFolderContent::getPermissionCodes()))
             ->setName(self::ROUTE_GET_FOLDER_CONTENT);
 
         $app->post("/folder/{".self::FOLDER_ID."}/file", new UploadFileToFolder($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,UploadFileToFolder::getPermissionCodes()))
             ->setName(self::ROUTE_UPLOAD_FILE);
 
         $app->post("/move/{".self::FILE_ID."}/to/{".self::FOLDER_ID."}", new MoveItem($this))
