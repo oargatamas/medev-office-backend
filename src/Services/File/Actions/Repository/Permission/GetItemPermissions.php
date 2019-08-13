@@ -39,7 +39,7 @@ class GetItemPermissions extends APIRepositoryAction
 
         $result = $this->database->error();
         if(!is_null($result[2])){
-            throw new InternalServerException("Permissions can not queried. ".implode(" - ",$result));
+            throw new InternalServerException("Permissions can not be queried. ".implode(" - ",$result));
         }
 
         $permissionsOfUser = [];
@@ -47,6 +47,10 @@ class GetItemPermissions extends APIRepositoryAction
             $permissionsOfUser[$record["ItemId"]][] = Permission::fromAssocArray($record);
         }
 
+        if(count($permissionsOfUser) === 1){
+            $firstItem = reset($permissionsOfUser);
+            return $firstItem;
+        }
         return $permissionsOfUser;
     }
 }
