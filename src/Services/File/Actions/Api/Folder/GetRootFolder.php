@@ -31,7 +31,7 @@ class GetRootFolder extends APIServlet
     {
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
-        $withMeta = $request->getParam("meta",false);
+        $withMeta = filter_var($request->getParam("meta",false),FILTER_VALIDATE_BOOLEAN);
 
         $getRootFolderId = new GetRootFolderId($this->service);
         $rootFolderId = $getRootFolderId->handleRequest();
@@ -39,6 +39,7 @@ class GetRootFolder extends APIServlet
         $data = [
             "id" => $rootFolderId
         ];
+
 
         if($withMeta){
             $getFolderMeta = new GetFolderMeta($this->service);
