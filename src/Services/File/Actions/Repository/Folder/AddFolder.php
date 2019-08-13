@@ -47,5 +47,10 @@ class AddFolder extends APIRepositoryAction
                 AssignItemToFolder::FOLDER_ID => $parentFolder
             ]);
         });
+
+        $result = $this->database->error();
+        if(!is_null($result[2])){
+            throw new InternalServerException("Can not insert folder data: ".implode(" - ",$result));
+        }
     }
 }

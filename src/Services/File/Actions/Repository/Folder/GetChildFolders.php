@@ -31,6 +31,11 @@ class GetChildFolders extends APIRepositoryAction
             ["h.ParentId" => $folderId,]
         );
 
+        $result = $this->database->error();
+        if(!is_null($result[2])){
+            throw new InternalServerException("Can not retrieve folders of folder: ".implode(" - ",$result));
+        }
+
         $childItems = [];
 
         foreach ($storedData as $record) {
