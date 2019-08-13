@@ -11,7 +11,7 @@ namespace MedevOffice\Services\File\Entities;
 
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
-abstract class DriveEntity extends DatabaseEntity
+abstract class DriveEntity extends DatabaseEntity implements \JsonSerializable
 {
     /**
      * @var Permission[]

@@ -32,7 +32,6 @@ class File implements MedooPersistable{
         $file->setMimetype($storedData["FileMimeType"]);
         $file->setCreatedAt(new DateTime($storedData["FileCreatedAt"]));
         $file->setUpdatedAt(new DateTime($storedData["FileUpdatedAt"]));
-        $file->setPermissions(explode(',',$storedData["Permissions"]));
 
         return $file;
     }
