@@ -11,6 +11,7 @@ namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
+use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderItems;
 use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderMeta;
 use MedevOffice\Services\File\Actions\Repository\Folder\GetRootFolderId;
 use MedevSlim\Core\Action\Servlet\APIServlet;
@@ -32,6 +33,7 @@ class GetRootFolder extends APIServlet
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
         $withMeta = filter_var($request->getParam("meta",false),FILTER_VALIDATE_BOOLEAN);
+        $withContent = filter_var($request->getParam("content",false),FILTER_VALIDATE_BOOLEAN);
 
         $getRootFolderId = new GetRootFolderId($this->service);
         $rootFolderId = $getRootFolderId->handleRequest();
@@ -48,7 +50,16 @@ class GetRootFolder extends APIServlet
                 GetFolderMeta::REQUESTER => $authToken->getUser()->getIdentifier()
             ]);
 
-            $data = $folderInfo;
+            $data["meta"] = $folderInfo;
+        }
+
+        if($withContent){
+            $getFolderContent = new GetFolderItems($this->service);
+            $items = $getFolderContent->handleRequest([
+                GetFolderItems::FOLDER_ID => $rootFolderId,
+                GetFolderItems::USER_ID => $authToken->getUser()->getIdentifier()
+            ]);
+            $data["content"] = $items;
         }
 
         return $response->withJson($data,200);
