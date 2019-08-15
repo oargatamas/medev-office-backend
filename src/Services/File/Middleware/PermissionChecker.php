@@ -65,7 +65,7 @@ class PermissionChecker
         ]);
 
         (new ValidatePermission($this->service))->handleRequest([
-            ValidatePermission::ITEM_PERMISSIONS => $permissions[$itemId],
+            ValidatePermission::ITEM_PERMISSIONS => $permissions,
             ValidatePermission::PERMISSIONS => $this->requiredPermissions,
             ValidatePermission::THROW_ERROR => true
         ]);
