@@ -42,29 +42,33 @@ class GetFolderItems extends APIRepositoryAction
         /** @var DriveEntity[] $items */
         $items = array_merge($folders,$files);
 
-        $itemIds = array_map(function(DatabaseEntity $entity){
-            return $entity->getIdentifier();
-        },$items);
+        if(count($items) > 0){
+            $itemIds = array_map(function(DatabaseEntity $entity){
+                return $entity->getIdentifier();
+            },$items);
 
-        $getPermissions = new GetItemPermissions($this->service);
-        $permissions = $getPermissions->handleRequest([
-            GetItemPermissions::ITEM_ID => $itemIds,
-            GetItemPermissions::USER_ID => $userId
-        ]);
+            $getPermissions = new GetItemPermissions($this->service);
+            $permissions = $getPermissions->handleRequest([
+                GetItemPermissions::ITEM_ID => $itemIds,
+                GetItemPermissions::USER_ID => $userId
+            ]);
 
-        foreach ($items as $item){
-            $item->setPermissions($permissions[$item->getIdentifier()]);
+            foreach ($items as $item){
+                $item->setPermissions($permissions[$item->getIdentifier()]);
+            }
+
+            $permissionsCheck =  new ValidatePermission($this->service);
+
+            $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck){
+                return $permissionsCheck->handleRequest([
+                    ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions(),
+                    ValidatePermission::PERMISSIONS => [Permission::READ]
+                ]);
+            });
+
+            return $filteredItems;
         }
 
-        $permissionsCheck =  new ValidatePermission($this->service);
-
-        $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck){
-            return $permissionsCheck->handleRequest([
-                ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions(),
-                ValidatePermission::PERMISSIONS => [Permission::READ]
-            ]);
-        });
-
-        return $filteredItems;
+        return $items;
     }
 }
