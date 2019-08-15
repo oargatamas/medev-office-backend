@@ -13,6 +13,7 @@ namespace MedevOffice\Services\File\Actions\Api\Folder;
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderItems;
+use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderMeta;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevOffice\Services\File\OfficeFileService;
@@ -38,13 +39,24 @@ class GetFolderContent extends APIServlet implements PermissionRestricted
         $userId = $authToken->getUser()->getIdentifier();
         $folderId = $args[OfficeFileService::FOLDER_ID];
 
+        $getFolder = new GetFolderMeta($this->service);
+        $folder = $getFolder->handleRequest([
+            GetFolderMeta::FOLDER_ID => $folderId,
+            GetFolderMeta::REQUESTER => $userId
+        ]);
+
         $getItems = new GetFolderItems($this->service);
         $items = $getItems->handleRequest([
             GetFolderItems::FOLDER_ID => $folderId,
             GetFolderItems::USER_ID => $userId
         ]);
 
-        return $response->withJson($items);
+        $data = [
+            "parent" => $folder,
+            "content" => $items,
+        ];
+
+        return $response->withJson($data,200);
     }
 
     /**
