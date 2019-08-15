@@ -12,6 +12,7 @@ namespace MedevOffice\Services\File\Actions\Repository\Permission;
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
+use MedevSlim\Core\Service\Exceptions\ForbiddenException;
 use MedevSlim\Core\Service\Exceptions\UnauthorizedException;
 
 class ValidatePermission extends APIRepositoryAction
@@ -43,7 +44,7 @@ class ValidatePermission extends APIRepositoryAction
         if( $commonItems != $requiredPermissions){
             $msg = "User has not enough permission to execute command. Required permission : [".implode($requiredPermissions,',')."], User permission: [". implode($userPermissions,',')."]";
             if($throwError){
-                throw new UnauthorizedException($msg);
+                throw new ForbiddenException($msg);
             }else{
                 $this->error($msg);
                 return false;
