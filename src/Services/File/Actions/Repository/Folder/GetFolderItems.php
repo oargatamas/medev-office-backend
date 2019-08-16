@@ -54,7 +54,7 @@ class GetFolderItems extends APIRepositoryAction
             ]);
 
             foreach ($items as $item){
-                $item->setPermissions($permissions[$item->getIdentifier()]);
+                $item->setPermissions($permissions[$item->getIdentifier()] ?? $permissions);
             }
 
             $permissionsCheck =  new ValidatePermission($this->service);

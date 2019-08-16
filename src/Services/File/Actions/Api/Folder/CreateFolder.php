@@ -57,7 +57,7 @@ class CreateFolder extends APIServlet implements PermissionRestricted
 
         $data = [
             "status" => "success",
-            "folderId" => ""
+            "folderId" => $folder->getIdentifier()
         ];
 
         return $response->withJson($data,201);

@@ -39,6 +39,7 @@ class AddFolder extends APIRepositoryAction
             (new AddItemPermission($this->service))->handleRequest([
                 AddItemPermission::ITEM_ID => $folder->getIdentifier(),
                 AddItemPermission::USER_ID => $folder->getAuthor(),
+                AddItemPermission::APPROVAL_ID => $folder->getAuthor(),
                 AddItemPermission::PERMISSIONS => Permission::ALL
             ]);
 
