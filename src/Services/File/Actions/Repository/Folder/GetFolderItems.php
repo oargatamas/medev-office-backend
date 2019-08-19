@@ -66,7 +66,7 @@ class GetFolderItems extends APIRepositoryAction
                 ]);
             });
 
-            return $filteredItems;
+            return array_values($filteredItems);
         }
 
         return $items;

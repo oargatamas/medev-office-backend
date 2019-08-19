@@ -24,7 +24,7 @@ class GetItemPermissions extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
-        $itemIds = $args[self::ITEM_ID];
+        $itemIds = is_array($args[self::ITEM_ID]) ? $args[self::ITEM_ID] : [$args[self::ITEM_ID]];
         $userId = $args[self::USER_ID];
 
         $storedData = $this->database->select(Permission::getTableName()."(p)",
@@ -43,9 +43,17 @@ class GetItemPermissions extends APIRepositoryAction
         }
 
         $permissionsOfUser = [];
+
         foreach ($storedData as $record){
             $permissionsOfUser[$record["ItemId"]][] = Permission::fromAssocArray($record);
         }
+
+        foreach ($itemIds as $itemId){
+            if(!array_key_exists($itemId,$permissionsOfUser)){
+                $permissionsOfUser[$itemId] = [];
+            }
+        }
+
 
         if(count($permissionsOfUser) === 1){
             $firstItem = reset($permissionsOfUser);
