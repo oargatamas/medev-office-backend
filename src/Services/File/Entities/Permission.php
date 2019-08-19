@@ -110,7 +110,7 @@ class Permission extends DatabaseEntity implements JsonSerializable
     {
         return [
             "id" => $this->getIdentifier(),
-            "createdAt" => $this->getCreatedAt()
+            "createdAt" => $this->getCreatedAt()->getTimestamp()
         ];
     }
 }
