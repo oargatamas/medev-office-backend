@@ -44,7 +44,7 @@ class EditFolder extends APIServlet implements PermissionRestricted
         ]);
 
         //Todo add some kind of field validation logic here. e.g. empty string
-        $folderInfo->setFoldername($requestBody["fileName"]);
+        $folderInfo->setFoldername($requestBody["folderName"]);
 
 
 
