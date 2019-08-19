@@ -111,7 +111,7 @@ class Folder extends DriveEntity implements \JsonSerializable
             "id" => $this->getIdentifier(),
             "type" => "folder",
             "name" => $this->getFoldername(),
-            //"Author" => $this->getAuthor(),
+            "author" => $this->getAuthor(),
             "createdAt" => $this->getCreatedAt()->getTimestamp(),
             "updatedAt" => $this->getUpdatedAt()->getTimestamp(),
             "permissions" => $this->getPermissions()
