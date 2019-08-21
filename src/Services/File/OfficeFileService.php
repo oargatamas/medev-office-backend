@@ -117,7 +117,7 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->add(new PermissionChecker($this,EditFolder::getPermissionCodes()))
             ->setName(self::ROUTE_EDIT_FOLDER);
 
-        $app->post("/permission/types", new FetchPermissions($this))
+        $app->get("/permission/types", new FetchPermissions($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->setName(self::ROUTE_FETCH_PERMISSIONS);
     }
