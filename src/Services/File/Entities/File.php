@@ -181,7 +181,7 @@ class File extends DriveEntity implements \JsonSerializable
             "author" => $this->getAuthorId(),
             "createdAt" => $this->getCreatedAt()->getTimestamp(),
             "updatedAt" => $this->getUpdatedAt()->getTimestamp(),
-            "permissions" => $this->getPermissions() // Todo modify to group the permissions by user
+            "permissions" => $this->getPermissionsByUser(),
         ];
     }
 }

@@ -34,6 +34,14 @@ abstract class DriveEntity extends DatabaseEntity implements \JsonSerializable
         return $this->permissions;
     }
 
+    public function getPermissionsByUser(){
+        $result = [];
+        foreach ($this->permissions as $permission){
+            $result[$permission->getUserId()][] = $permission;
+        }
+        return $result;
+    }
+
     /**
      * @param Permission[] $permissions
      */
