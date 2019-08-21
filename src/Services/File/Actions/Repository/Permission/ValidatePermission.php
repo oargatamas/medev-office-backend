@@ -13,7 +13,6 @@ use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\ForbiddenException;
-use MedevSlim\Core\Service\Exceptions\UnauthorizedException;
 
 class ValidatePermission extends APIRepositoryAction
 {
@@ -24,7 +23,7 @@ class ValidatePermission extends APIRepositoryAction
     /**
      * @param $args
      * @return bool
-     * @throws UnauthorizedException
+     * @throws ForbiddenException
      * @throws \Exception
      */
     public function handleRequest($args = [])
