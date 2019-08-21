@@ -13,16 +13,24 @@ use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
 abstract class DriveEntity extends DatabaseEntity implements \JsonSerializable
 {
+    const PERMISSION_ALL = -1;
     /**
      * @var Permission[]
      */
     private $permissions;
 
     /**
+     * @param int $userId
      * @return Permission[]
      */
-    public function getPermissions()
+    public function getPermissions($userId = self::PERMISSION_ALL)
     {
+        if($userId !== self::PERMISSION_ALL){
+            $filtered = array_filter($this->permissions,function(Permission $item) use ($userId){
+                return $item->getUserId() === $userId;
+            });
+            return array_values($filtered);
+        }
         return $this->permissions;
     }
 
