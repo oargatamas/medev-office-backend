@@ -16,6 +16,7 @@ class GetItemPermissions extends APIRepositoryAction
 {
     const ITEM_ID = "itemId";
     const USER_ID = "userId";
+    const ALL_USER = "allUser";
 
     /**
      * @param $args
@@ -27,16 +28,11 @@ class GetItemPermissions extends APIRepositoryAction
         //Todo modify to give back item permissions for all users.
 
         $itemIds = is_array($args[self::ITEM_ID]) ? $args[self::ITEM_ID] : [$args[self::ITEM_ID]];
-        $userId = $args[self::USER_ID];
+        $userId = $args[self::USER_ID] ?? self::ALL_USER;
 
         $storedData = $this->database->select(Permission::getTableName()."(p)",
             Permission::getColumnNames(),
-            [
-                "AND" => [
-                    "p.ItemId" => $itemIds,
-                    "p.UserId" => $userId
-                ]
-            ]
+            $this->userFilter($userId,$itemIds)
         );
 
         $result = $this->database->error();
@@ -62,5 +58,20 @@ class GetItemPermissions extends APIRepositoryAction
             return $firstItem;
         }
         return $permissionsOfUser;
+    }
+
+    private function userFilter($user,$itemIds){
+        if($user !== self::ALL_USER){
+            return [
+                "AND" => [
+                    "p.ItemId" => $itemIds,
+                    "p.UserId" => $user
+                ]
+            ];
+        }else{
+            return [
+                "p.ItemId" => $itemIds,
+            ];
+        }
     }
 }
