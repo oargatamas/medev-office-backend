@@ -17,7 +17,6 @@ use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
 class GetFolderMeta extends APIRepositoryAction
 {
-    const REQUESTER = "requester";
     const FOLDER_ID = "folderId";
 
     /**
@@ -28,7 +27,6 @@ class GetFolderMeta extends APIRepositoryAction
     public function handleRequest($args = [])
     {
         $itemId = $args[self::FOLDER_ID];
-        $requester = $args[self::REQUESTER];
 
         $storedData = $this->database->get(
             Folder::getTableName() . "(folder)",
@@ -46,7 +44,6 @@ class GetFolderMeta extends APIRepositoryAction
         $getPermissions = new GetItemPermissions($this->service);
         $folder->setPermissions($getPermissions->handleRequest([
             GetItemPermissions::ITEM_ID => $folder->getIdentifier(),
-            GetItemPermissions::USER_ID => $requester
         ]));
 
 

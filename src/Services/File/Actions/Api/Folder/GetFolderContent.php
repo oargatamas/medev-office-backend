@@ -42,14 +42,12 @@ class GetFolderContent extends APIServlet implements PermissionRestricted
 
         $getFolder = new GetFolderMeta($this->service);
         $folder = $getFolder->handleRequest([
-            GetFolderMeta::FOLDER_ID => $folderId,
-            GetFolderMeta::REQUESTER => $userId,
+            GetFolderMeta::FOLDER_ID => $folderId
         ]);
 
         $getItemParents = new GetAllParentOfItem($this->service);
         $parents = $getItemParents->handleRequest([
-            GetAllParentOfItem::ITEM_ID => $folderId,
-            GetAllParentOfItem::USER_ID => $userId,
+            GetAllParentOfItem::ITEM_ID => $folderId
         ]);
 
         $getItems = new GetFolderItems($this->service);

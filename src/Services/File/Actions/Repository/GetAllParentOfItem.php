@@ -14,7 +14,6 @@ use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 class GetAllParentOfItem extends APIRepositoryAction
 {
     const ITEM_ID = "itemId";
-    const USER_ID = "userId";
 
     /**
      * @param $args
@@ -24,7 +23,6 @@ class GetAllParentOfItem extends APIRepositoryAction
     public function handleRequest($args = [])
     {
         $itemId = $args[self::ITEM_ID];
-        $userId = $args[self::USER_ID];
 
         $getParent = new GetItemParent($this->service);
 
@@ -32,7 +30,6 @@ class GetAllParentOfItem extends APIRepositoryAction
 
         while ($parent = $getParent->handleRequest([
             GetItemParent::ITEM_ID => $itemId,
-            GetItemParent::USER_ID => $userId,
         ])) {
             $result[] = $parent;
             $itemId = $parent->getIdentifier();

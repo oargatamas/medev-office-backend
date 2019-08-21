@@ -9,8 +9,6 @@
 namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
-use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
-use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\File\GetFileMeta;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
@@ -32,13 +30,10 @@ class DownloadFile extends APIServlet implements PermissionRestricted
      */
     public function handleRequest(Request $request, Response $response, $args)
     {
-        /** @var OAuthToken $authToken */
-        $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
         $fileId = $args[OfficeFileService::FILE_ID];
-        $requester = $authToken->getUser()->getIdentifier();
 
         $getFileInfo = new GetFileMeta($this->service);
-        $fileInfo = $getFileInfo->handleRequest([GetFileMeta::FILE_ID => $fileId, GetFileMeta::REQUESTER => $requester]);
+        $fileInfo = $getFileInfo->handleRequest([GetFileMeta::FILE_ID => $fileId]);
 
 
         $basePath = $_SERVER["DOCUMENT_ROOT"] . $this->config["application"]["drive"]["documentPath"];

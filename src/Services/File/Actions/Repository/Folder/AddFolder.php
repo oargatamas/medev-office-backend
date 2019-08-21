@@ -30,7 +30,7 @@ class AddFolder extends APIRepositoryAction
         $folder = $args[self::FOLDER];
         $parentFolder = $args[self::PARENT_ID];
 
-        $this->database->action(function ($database) use ($folder, $parentFolder) {
+        $this->database->action(function () use ($folder, $parentFolder) {
 
             (new PersistFolderMeta($this->service))->handleRequest([
                 PersistFolderMeta::FOLDER => $folder

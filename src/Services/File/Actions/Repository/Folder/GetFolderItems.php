@@ -50,7 +50,6 @@ class GetFolderItems extends APIRepositoryAction
             $getPermissions = new GetItemPermissions($this->service);
             $permissions = $getPermissions->handleRequest([
                 GetItemPermissions::ITEM_ID => $itemIds,
-                GetItemPermissions::USER_ID => $userId
             ]);
 
             foreach ($items as $item){
@@ -59,9 +58,9 @@ class GetFolderItems extends APIRepositoryAction
 
             $permissionsCheck =  new ValidatePermission($this->service);
 
-            $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck){
+            $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck, $userId){
                 return $permissionsCheck->handleRequest([
-                    ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions(),
+                    ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions($userId),
                     ValidatePermission::PERMISSIONS => [Permission::READ]
                 ]);
             });

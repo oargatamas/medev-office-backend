@@ -40,10 +40,10 @@ class MoveItem extends APIServlet implements PermissionRestricted
         $folderId = $args[OfficeFileService::FOLDER_ID];
 
         $getFolderInfo = (new GetFolderMeta($this->service));
-        $folderInfo = $getFolderInfo->handleRequest([GetFolderMeta::FOLDER_ID => $itemId, GetFolderMeta::REQUESTER => $requester]);
+        $folderInfo = $getFolderInfo->handleRequest([GetFolderMeta::FOLDER_ID => $itemId]);
 
         (new ValidatePermission($this->service))->handleRequest([
-            ValidatePermission::ITEM_PERMISSIONS => $folderInfo->getPermissions(),
+            ValidatePermission::ITEM_PERMISSIONS => $folderInfo->getPermissions($requester),
             ValidatePermission::PERMISSIONS => [Permission::READ, Permission::CREATE],
             ValidatePermission::THROW_ERROR => true
         ]);

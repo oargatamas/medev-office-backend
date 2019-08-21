@@ -46,8 +46,7 @@ class GetRootFolder extends APIServlet
         if($withMeta){
             $getFolderMeta = new GetFolderMeta($this->service);
             $folderInfo = $getFolderMeta->handleRequest([
-                GetFolderMeta::FOLDER_ID => $rootFolderId,
-                GetFolderMeta::REQUESTER => $authToken->getUser()->getIdentifier()
+                GetFolderMeta::FOLDER_ID => $rootFolderId
             ]);
 
             $data["meta"] = $folderInfo;

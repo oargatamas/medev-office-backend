@@ -16,7 +16,6 @@ use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
 class GetFileMeta extends APIRepositoryAction
 {
-    const REQUESTER = "requester";
     const FILE_ID = "fileId";
 
     /**
@@ -27,7 +26,6 @@ class GetFileMeta extends APIRepositoryAction
     public function handleRequest($args = [])
     {
         $itemId = $args[self::FILE_ID];
-        $requester = $args[self::REQUESTER];
 
         $storedData = $this->database->get(
             File::getTableName() . "(file)",
@@ -45,7 +43,6 @@ class GetFileMeta extends APIRepositoryAction
         $getPermissions = new GetItemPermissions($this->service);
         $file->setPermissions($getPermissions->handleRequest([
             GetItemPermissions::ITEM_ID => $file->getIdentifier(),
-            GetItemPermissions::USER_ID => $requester
         ]));
 
 

@@ -17,7 +17,6 @@ use MedevSlim\Core\Service\Exceptions\InternalServerException;
 class GetItemParent extends APIRepositoryAction
 {
     const ITEM_ID = "itemId";
-    const USER_ID = "userId";
 
     /**
      * @param $args
@@ -28,7 +27,6 @@ class GetItemParent extends APIRepositoryAction
     public function handleRequest($args = [])
     {
         $itemId = $args[self::ITEM_ID];
-        $userId = $args[self::USER_ID];
 
         $storedData = $this->database->get("Archive_ItemHierarchy(ih)",
             ["ih.ParentId"],
@@ -46,8 +44,7 @@ class GetItemParent extends APIRepositoryAction
 
         $getFolder = new GetFolderMeta($this->service);
         $folder = $getFolder->handleRequest([
-            GetFolderMeta::FOLDER_ID => $storedData["ParentId"],
-            GetFolderMeta::REQUESTER => $userId,
+            GetFolderMeta::FOLDER_ID => $storedData["ParentId"]
         ]);
 
         return $folder;
