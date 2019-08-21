@@ -19,6 +19,7 @@ use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\EditFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Folder\GetRootFolder;
+use MedevOffice\Services\File\Actions\Api\Permission\FetchPermissions;
 use MedevOffice\Services\File\Actions\Api\Permission\GrantPermission;
 use MedevOffice\Services\File\Actions\Api\Permission\RemovePermission;
 use MedevOffice\Services\File\Middleware\PermissionChecker;
@@ -43,6 +44,7 @@ class OfficeFileService extends OAuthProtectedAPIService
     const ROUTE_CREATE_FOLDER = "createFolder";
     const ROUTE_EDIT_FILE = "editFile";
     const ROUTE_EDIT_FOLDER = "editFolder";
+    const ROUTE_FETCH_PERMISSIONS = "fetchPermissions";
 
 
     public function __construct(MedevApp $app)
@@ -114,5 +116,9 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,EditFolder::getPermissionCodes()))
             ->setName(self::ROUTE_EDIT_FOLDER);
+
+        $app->post("/permission/types", new FetchPermissions($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->setName(self::ROUTE_FETCH_PERMISSIONS);
     }
 }
