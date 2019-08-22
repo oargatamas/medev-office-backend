@@ -13,7 +13,7 @@ use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetUserModules extends APIServlet
+class FetchUserModules extends APIServlet
 {
 
     /**
