@@ -26,15 +26,13 @@ class FetchUserModules extends APIServlet
     {
 
         $data = [
-            "modules" => [
-                [
-                    "name" => "dashboard",
-                    "enabled" => true
-                ],
-                [
-                    "name" => "drive",
-                    "enabled" => true
-                ]
+            [
+                "name" => "dashboard",
+                "enabled" => true
+            ],
+            [
+                "name" => "drive",
+                "enabled" => true
             ]
         ];
 
