@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Archive_ItemHierarchy(
 
 CREATE TABLE IF NOT EXISTS Archive_ItemPermissions(
   ItemId VARCHAR(50),
-  PermissionId VARCHAR(10),
+  PermissionId VARCHAR(20),
   UserId INT NOT NULL,
   Approval INT NOT NULL,
   CreatedAt DATETIME NOT NULL,
