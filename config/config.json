@@ -11,7 +11,7 @@
   },
   "cors" : {
     "allowed_origins" : ["https://office.medev.local:3000"],
-    "allowed_headers" : ["Content-Type","Accept","Origin"]
+    "allowed_headers" : ["Content-Type","Content-Disposition","Accept","Origin"]
   },
   "application": {
     "drive": {
@@ -19,6 +19,7 @@
     }
   },
   "authorization": {
+    "host" : "auth.medev.local",
     "token": {
       "public_key": {
         "content": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2cIqTpxz/4WuGJ27Tq+Z\n35XK660gIIXZMOGCzFlhkk6kzcGst9jLFeBnMgSZnoAW6UDnwXy+W8zapd7ROVV+\no0BXMgBaD/OOgQ6djrDfY23+9htVciqsPADhDKih/ldDlClSqMh5LlNYup4EfI02\nFZnZWPwBZxaBVr6sLEzn/FAjdRRNSCvanheV3uRKxAf11RZ2YNULIHSS8nh/2mHX\ncs1pG9OiaHNBf7c72oxoz5ATqFs1EfCmp79/MCxDCFYsn8Aq4vcznb92ZTXnXcwI\n/L0b+5k1+Js2C1dpHDGTUvNIYXtaqebGiMfYrAlSA4I402QKrEa+HczmFIFPJbte\nXwIDAQAB\n-----END PUBLIC KEY-----"
