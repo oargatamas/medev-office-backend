@@ -29,13 +29,8 @@ class UpdateItemPermissions extends APIRepositoryAction
         $permissions = $args[self::PERMISSIONS];
 
         $this->database->action(function () use ($itemId, $permissions) {
-            $userIds = array_map(function (Permission $permission) {
-                return $permission->getUserId();
-            }, $permissions);
-
             (new ClearItemPermission($this->service))->handleRequest([
-                ClearItemPermission::ITEM_ID => $itemId,
-                ClearItemPermission::USER_ID => $userIds
+                ClearItemPermission::ITEM_ID => $itemId
             ]);
 
             (new AddItemPermission($this->service))->handleRequest([

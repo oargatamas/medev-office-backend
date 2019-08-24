@@ -16,8 +16,6 @@ use MedevSlim\Core\Service\Exceptions\InternalServerException;
 class ClearItemPermission extends APIRepositoryAction
 {
     const ITEM_ID = "itemId";
-    const USER_ID = "userId";
-    const PERMISSIONS = "permissions";
 
     /**
      * @param $args
@@ -26,16 +24,10 @@ class ClearItemPermission extends APIRepositoryAction
     public function handleRequest($args = [])
     {
         $itemId = $args[self::ITEM_ID];
-        $userIds = $args[self::USER_ID];
 
 
         $this->database->delete(Permission::getTableName(),
-            [
-                "AND" => [
-                    "ItemId" => $itemId,
-                    "UserId" => $userIds,
-                ]
-            ]
+            ["ItemId" => $itemId,]
         );
 
         $result = $this->database->error();
