@@ -42,11 +42,11 @@ class GrantPermission extends APIServlet implements PermissionRestricted
         $permissions = [];
 
         try {
-            foreach ($requestBody["permissions"] as $userId => $permissionIds) {
-                foreach ($permissionIds as $permissionId) {
+            foreach ($requestBody as $userId => $userPermissions) {
+                foreach ($userPermissions as $permission) {
                     $item = new Permission();
 
-                    $item->setIdentifier($permissionId);
+                    $item->setIdentifier($permission["id"]);
                     $item->setApproval($authToken->getUser()->getIdentifier());
                     $item->setUserId($userId);
                     $item->setCreatedAt($now);
