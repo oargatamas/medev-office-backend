@@ -13,7 +13,7 @@ use MedevOffice\Services\File\Entities\Persistables\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
-class RemoveItemPermission extends APIRepositoryAction
+class ClearItemPermission extends APIRepositoryAction
 {
     const ITEM_ID = "itemId";
     const USER_ID = "userId";
@@ -26,16 +26,14 @@ class RemoveItemPermission extends APIRepositoryAction
     public function handleRequest($args = [])
     {
         $itemId = $args[self::ITEM_ID];
-        $userId = $args[self::USER_ID];
-        $permissionsToRemove = $args[self::PERMISSIONS];
+        $userIds = $args[self::USER_ID];
 
 
         $this->database->delete(Permission::getTableName(),
             [
                 "AND" => [
                     "ItemId" => $itemId,
-                    "UserId" => $userId,
-                    "PermissionId" => $permissionsToRemove
+                    "UserId" => $userIds,
                 ]
             ]
         );

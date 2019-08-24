@@ -9,7 +9,10 @@
 namespace MedevOffice\Services\File\Actions\Api\Permission;
 
 
-use MedevOffice\Services\File\Actions\Repository\Permission\AddItemPermission;
+use DateTime;
+use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
+use MedevAuth\Services\Auth\OAuth\OAuthService;
+use MedevOffice\Services\File\Actions\Repository\Permission\UpdateItemPermissions;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevOffice\Services\File\OfficeFileService;
@@ -29,22 +32,34 @@ class GrantPermission extends APIServlet implements PermissionRestricted
      */
     public function handleRequest(Request $request, Response $response, $args)
     {
+        /** @var OAuthToken $authToken */
+        $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
         $itemId = $args[OfficeFileService::FILE_ID];
         $requestBody = $request->getParsedBody();
+        $now = new DateTime();
 
-        $userId = $requestBody["toUser"];
-        $permissionIds = $requestBody["permissions"];
+        $permissions = [];
+        foreach ($requestBody["permissions"] as $userId => $permissionIds){
+            foreach ($permissionIds as $permissionId){
+                $item = new Permission();
 
-        (new AddItemPermission($this->service))->handleRequest([
-            AddItemPermission::ITEM_ID => $itemId,
-            AddItemPermission::USER_ID => $userId,
-            AddItemPermission::PERMISSIONS => $permissionIds
+                $item->setIdentifier($permissionId);
+                $item->setApproval($authToken->getUser()->getIdentifier());
+                $item->setUserId($userId);
+                $item->setCreatedAt($now);
+
+                $permissions[] = $item;
+            }
+        }
+
+        (new UpdateItemPermissions($this->service))->handleRequest([
+            UpdateItemPermissions::ITEM_ID => $itemId,
+            UpdateItemPermissions::PERMISSIONS => $permissions
         ]);
 
         $data = [
             "status" => "success",
             "itemId" => $itemId,
-            "grantedPermissions" => $permissionIds
         ];
 
         return $response->withJson($data, 201);
@@ -57,7 +72,7 @@ class GrantPermission extends APIServlet implements PermissionRestricted
     {
         return [
             Permission::READ,
-            Permission::ADD_GRANT
+            Permission::GRANT_PERMISSION
         ];
     }
 }

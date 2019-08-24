@@ -38,7 +38,6 @@ class OfficeFileService extends OAuthProtectedAPIService
     const ROUTE_UPLOAD_FILE = "uploadFile";
     const ROUTE_MOVE_ITEM = "moveItem";
     const ROUTE_GRANT = "grant";
-    const ROUTE_REMOVE_GRANT = "removeGrant";
     const ROUTE_REMOVE_FILE = "removeFile";
     const ROUTE_REMOVE_FOLDER = "removeFolder";
     const ROUTE_CREATE_FOLDER = "createFolder";
@@ -86,11 +85,6 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,GrantPermission::getPermissionCodes()))
             ->setName(self::ROUTE_GRANT);
-
-        $app->delete("/{".self::FILE_ID."}/permission", new RemovePermission($this))
-            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
-            ->add(new PermissionChecker($this,RemovePermission::getPermissionCodes()))
-            ->setName(self::ROUTE_REMOVE_GRANT);
 
         $app->delete("/folder/{".self::FILE_ID."}", new DeleteItem($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())

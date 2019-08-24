@@ -10,7 +10,8 @@ namespace MedevOffice\Services\File\Actions\Repository\Folder;
 
 
 use MedevOffice\Services\File\Actions\Repository\Permission\AddItemPermission;
-use MedevOffice\Services\File\Entities\Permission;
+use MedevOffice\Services\File\Entities;
+use MedevOffice\Services\File\Entities\Persistables\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
@@ -38,9 +39,7 @@ class AddFolder extends APIRepositoryAction
 
             (new AddItemPermission($this->service))->handleRequest([
                 AddItemPermission::ITEM_ID => $folder->getIdentifier(),
-                AddItemPermission::USER_ID => $folder->getAuthor(),
-                AddItemPermission::APPROVAL_ID => $folder->getAuthor(),
-                AddItemPermission::PERMISSIONS => Permission::ALL
+                AddItemPermission::PERMISSIONS => Permission::createPermissions($folder->getAuthor(), $folder->getAuthor(), Entities\Permission::ALL)
             ]);
 
             (new AssignItemToFolder($this->service))->handleRequest([
@@ -50,8 +49,8 @@ class AddFolder extends APIRepositoryAction
         });
 
         $result = $this->database->error();
-        if(!is_null($result[2])){
-            throw new InternalServerException("Can not insert folder data: ".implode(" - ",$result));
+        if (!is_null($result[2])) {
+            throw new InternalServerException("Can not insert folder data: " . implode(" - ", $result));
         }
     }
 }

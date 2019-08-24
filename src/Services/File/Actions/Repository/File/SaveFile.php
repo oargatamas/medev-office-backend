@@ -11,8 +11,9 @@ namespace MedevOffice\Services\File\Actions\Repository\File;
 
 use MedevOffice\Services\File\Actions\Repository\Folder\AssignItemToFolder;
 use MedevOffice\Services\File\Actions\Repository\Permission\AddItemPermission;
+use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\File;
-use MedevOffice\Services\File\Entities\Permission;
+use MedevOffice\Services\File\Entities\Persistables\Permission;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Utils\UUID\UUID;
 
@@ -65,9 +66,7 @@ class SaveFile extends APIRepositoryAction
 
             (new AddItemPermission($this->service))->handleRequest([
                 AddItemPermission::ITEM_ID => $file->getIdentifier(),
-                AddItemPermission::USER_ID => $authorId,
-                AddItemPermission::APPROVAL_ID => $authorId,
-                AddItemPermission::PERMISSIONS => Permission::ALL,
+                AddItemPermission::PERMISSIONS => Permission::createPermissions($authorId,$authorId,Entities\Permission::ALL),
             ]);
         });
 
