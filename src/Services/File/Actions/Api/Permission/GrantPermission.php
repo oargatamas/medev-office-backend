@@ -17,6 +17,7 @@ use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
+use MedevSlim\Core\Service\Exceptions\BadRequestException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -39,17 +40,23 @@ class GrantPermission extends APIServlet implements PermissionRestricted
         $now = new DateTime();
 
         $permissions = [];
-        foreach ($requestBody["permissions"] as $userId => $permissionIds){
-            foreach ($permissionIds as $permissionId){
-                $item = new Permission();
 
-                $item->setIdentifier($permissionId);
-                $item->setApproval($authToken->getUser()->getIdentifier());
-                $item->setUserId($userId);
-                $item->setCreatedAt($now);
+        try {
+            foreach ($requestBody["permissions"] as $userId => $permissionIds) {
+                foreach ($permissionIds as $permissionId) {
+                    $item = new Permission();
 
-                $permissions[] = $item;
+                    $item->setIdentifier($permissionId);
+                    $item->setApproval($authToken->getUser()->getIdentifier());
+                    $item->setUserId($userId);
+                    $item->setCreatedAt($now);
+
+                    $permissions[] = $item;
+                }
             }
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+            throw new BadRequestException("Error in request body. Permissions can not be parsed: ". $e->getMessage());
         }
 
         (new UpdateItemPermissions($this->service))->handleRequest([
@@ -57,11 +64,11 @@ class GrantPermission extends APIServlet implements PermissionRestricted
             UpdateItemPermissions::PERMISSIONS => $permissions
         ]);
 
+
         $data = [
             "status" => "success",
             "itemId" => $itemId,
         ];
-
         return $response->withJson($data, 201);
     }
 
