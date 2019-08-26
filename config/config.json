@@ -1,0 +1,33 @@
+{
+  "determineRouteBeforeAppMiddleware" : true,
+  "database": {
+    "database_type": "mysql",
+    "database_name": "medev_office",
+    "server": "localhost",
+    "username": "medev_office",
+    "password": "tWTUoSQLCjiXk1y5",
+    "charset": "utf8mb4",
+    "collation": "utf8mb4_general_ci"
+  },
+  "cors" : {
+    "allowed_origins" : ["https://office.medev.local:3000"],
+    "allowed_headers" : ["Content-Type","Content-Disposition","Accept","Origin"]
+  },
+  "application": {
+    "drive": {
+      "documentPath": "/../drive"
+    }
+  },
+  "authorization": {
+    "host" : "auth.medev.local",
+    "token": {
+      "public_key": {
+        "content": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2cIqTpxz/4WuGJ27Tq+Z\n35XK660gIIXZMOGCzFlhkk6kzcGst9jLFeBnMgSZnoAW6UDnwXy+W8zapd7ROVV+\no0BXMgBaD/OOgQ6djrDfY23+9htVciqsPADhDKih/ldDlClSqMh5LlNYup4EfI02\nFZnZWPwBZxaBVr6sLEzn/FAjdRRNSCvanheV3uRKxAf11RZ2YNULIHSS8nh/2mHX\ncs1pG9OiaHNBf7c72oxoz5ATqFs1EfCmp79/MCxDCFYsn8Aq4vcznb92ZTXnXcwI\n/L0b+5k1+Js2C1dpHDGTUvNIYXtaqebGiMfYrAlSA4I402QKrEa+HczmFIFPJbte\nXwIDAQAB\n-----END PUBLIC KEY-----"
+      },
+      "private_key": {
+        "content": "-----BEGIN RSA PRIVATE KEY-----\nProc-Type: 4,ENCRYPTED\nDEK-Info: DES-EDE3-CBC,2691F7372A9DF570\n\nU+1FCb6ZhhIToKZioq8/RmhOvodt0Z5DLyKofEqKJU6YRzJUKkCXWs4iSWaXZvyp\n/N2whm9J7WGWySVhpjAQAbVBnYwAYPVw2ti/UFAzRsf7toYdXy1pKK4q4I4u+3Ac\nCP/AK9v5sOCoSX9iqUhErA9difSAAQ831xZIQ7cgwsN61QYpvuWvN5yQJsuSHuz7\nMfA7XMES/UEYOW+5Dn68YXdF+i6wGasEA/x/SdLXPNoD57foiPRZcRZmvXzoGG0t\njO9g5cZW9shCGmTsQvP2vRLs5SzcjT9HWGci+hpybeb209zKRKCZpvmzz1GfrATT\nhiSyhLLJJpWCjTqPuGYNi4C/2QZJeTGFDdAmUjAamfJI6N441Z978v4usCcq3RJY\nhlCDv0Vg1Prti+KzLxw31xJHLtRTpuy3ACuLFNuT2rDis/3A6WGhmeplyKibsr7p\nW44o+zFMmUpBBGP0DMY/tw4nYo9jn3896KC3QEEu9Aal5N8iEC5cnvD26FzxfyOW\nKSTFTs3EuEVko1yAx3hy7A026yX+ZqcBZFxhNupWfB2Q1W5kZpLOAhwci6T09mlt\nIU/60WghBEFBUN5SCvZx+9mWVT1YlG4GC2NsNDSp+0XuVpFRY+aWzbIR25sG68z5\nr4wm28o3LBPf56bnkrANvTQq0z5Nqn4Ja9ell0ooOB0tW4Wpyu2Rw4GjSDM9cEeH\ngIxWLqvHhH0EpvclSsTogp7K0Tw51QrnATd9BDqY2BQzNWRQwHbRHNmUKYkmxQQ0\nlMwzcRo3I3uPJP21D3hj/HyJCYSWWTPeXOF5zgy8IityAkBMa09ZmyYgubaPY0P8\nY/2TfQ/LL4A6Vm0RoDSJyGh/Bv77oQ8KN8RxQLhFrhy+lvGB/XluA+hmSiCiNLq8\nBszuD4VCT4iSAOlfssogS2uYgD/uMcyPMC5MHqMnaoBBD47CkE+7WrXpMEq66rcm\nMYzaaN8QGQUHaIFkCJ4HYqL7+O1u0dLU3JSsXB1CCge3JtDaWxu/n894ERkwbtaw\nrKn84VoS54UZ9NxgTELqr5rGrMPdoZ5PMEwADe9yVNPZtgCD1/AngxNhDtXcYfGr\nNjNnHasRi0ZNu9lf2z9Qh2mxq3OVojH5fScHmdm2zlzwRjVByrWCkMYkDv+uPQBC\nlq6rQe7iSvHIsbqBeuiJuggs3wn2KG330T7fHHFbgWc3kh5H/JZUNFQrGJ+7ZRK1\njdgSMxbw9FVuCDFPurzaaVsgvLpxebuHZP02q3+czjNFU9plOVW0BpYSvAslv6jf\n3NxkXw6jRewyZxd6tDUxPO/GQYVd487DJXyo64kJTk1+ZEeFwLq6TM+EL5K7ml0a\nh3kwx1GCmi3xoVHmj0GrGae9IlADQpm5SZM9DmT9AmON7zSd4v/IXNfY+rr+A1v6\nyfG39+uX0y+6Y3tsCShs40evjg1MDckef8tIbrSx9aLKFhXL6WyRaBbebVreaWiV\nzaZ/zPEImX+zSMI+HQMTaKH2q+BvSNqKdDmLJswxxtk0yIUOe6Wggf6x4w8GEvOO\nJY4FWdMAhkum8aq5KlJLsfdEPxTi2iVkBLJRY3WFyB2ZXGU/vxwFUCHwoJjicMhB\n-----END RSA PRIVATE KEY-----",
+        "passphrase": "kiskacsa"
+      }
+    }
+  }
+}
