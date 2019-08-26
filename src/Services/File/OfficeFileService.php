@@ -61,6 +61,16 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->add(new PermissionChecker($this,DownloadFile::getPermissionCodes()))
             ->setName(self::ROUTE_DOWNLOAD_FILE);
 
+        $app->delete("/file/{".self::FILE_ID."}", new DeleteItem($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,DeleteItem::getPermissionCodes()))
+            ->setName(self::ROUTE_REMOVE_FILE);
+
+        $app->post("/file/{".self::FILE_ID."}", new EditFile($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,EditFile::getPermissionCodes()))
+            ->setName(self::ROUTE_EDIT_FILE);
+
         $app->get("/folder/root", new GetRootFolder($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->setName(self::ROUTE_GET_ROOT_FOLDER);
@@ -75,6 +85,21 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->add(new PermissionChecker($this,UploadFileToFolder::getPermissionCodes()))
             ->setName(self::ROUTE_UPLOAD_FILE);
 
+        $app->delete("/folder/{".self::FILE_ID."}", new DeleteItem($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,DeleteItem::getPermissionCodes()))
+            ->setName(self::ROUTE_REMOVE_FOLDER);
+
+        $app->post("/folder/{".self::FOLDER_ID."}/folder", new CreateFolder($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,CreateFolder::getPermissionCodes()))
+            ->setName(self::ROUTE_CREATE_FOLDER);
+
+        $app->post("/folder/{".self::FOLDER_ID."}", new EditFolder($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,EditFolder::getPermissionCodes()))
+            ->setName(self::ROUTE_EDIT_FOLDER);
+
         $app->post("/move/{".self::FILE_ID."}/to/{".self::FOLDER_ID."}", new MoveItem($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,DownloadFile::getPermissionCodes()))
@@ -84,31 +109,6 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,GrantPermission::getPermissionCodes()))
             ->setName(self::ROUTE_GRANT);
-
-        $app->delete("/folder/{".self::FILE_ID."}", new DeleteItem($this))
-            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
-            ->add(new PermissionChecker($this,DeleteItem::getPermissionCodes()))
-            ->setName(self::ROUTE_REMOVE_FOLDER);
-
-        $app->delete("/file/{".self::FILE_ID."}", new DeleteItem($this))
-            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
-            ->add(new PermissionChecker($this,DeleteItem::getPermissionCodes()))
-            ->setName(self::ROUTE_REMOVE_FILE);
-
-        $app->post("/folder/{".self::FOLDER_ID."}/folder", new CreateFolder($this))
-            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
-            ->add(new PermissionChecker($this,CreateFolder::getPermissionCodes()))
-            ->setName(self::ROUTE_CREATE_FOLDER);
-
-        $app->post("/file/{".self::FILE_ID."}", new EditFile($this))
-            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
-            ->add(new PermissionChecker($this,EditFile::getPermissionCodes()))
-            ->setName(self::ROUTE_EDIT_FILE);
-
-        $app->post("/folder/{".self::FOLDER_ID."}", new EditFolder($this))
-            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
-            ->add(new PermissionChecker($this,EditFolder::getPermissionCodes()))
-            ->setName(self::ROUTE_EDIT_FOLDER);
 
         $app->get("/permission/types", new FetchPermissions($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
