@@ -10,7 +10,6 @@ include "../vendor/autoload.php";
 
 use MedevOffice\Services\Core\OfficeCoreService;
 use MedevOffice\Services\File\OfficeFileService;
-use MedevSlim\Core\Action\Middleware\OriginHandler;
 use MedevSlim\Core\Application\MedevApp;
 
 
@@ -25,6 +24,5 @@ $coreService->registerService("");
 $fileService = new OfficeFileService($application);
 $fileService->registerService("/drive");
 
-//$application->add(new OriginHandler(["http://localhost:3000"]));
 
 $application->run();

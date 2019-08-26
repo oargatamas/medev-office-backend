@@ -11,17 +11,16 @@ namespace MedevOffice\Services\File;
 
 use MedevAuth\Services\Auth\OAuth\APIProtection\Service\OAuthProtectedAPIService;
 use MedevOffice\Services\File\Actions\Api\DeleteItem;
+use MedevOffice\Services\File\Actions\Api\File\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\File\EditFile;
 use MedevOffice\Services\File\Actions\Api\File\MoveItem;
 use MedevOffice\Services\File\Actions\Api\File\UploadFileToFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\CreateFolder;
-use MedevOffice\Services\File\Actions\Api\Folder\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\Folder\EditFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Folder\GetRootFolder;
 use MedevOffice\Services\File\Actions\Api\Permission\FetchPermissions;
 use MedevOffice\Services\File\Actions\Api\Permission\GrantPermission;
-use MedevOffice\Services\File\Actions\Api\Permission\RemovePermission;
 use MedevOffice\Services\File\Middleware\PermissionChecker;
 use MedevSlim\Core\Application\MedevApp;
 use MedevSlim\Core\Service\APIService;
