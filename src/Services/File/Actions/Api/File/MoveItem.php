@@ -43,6 +43,7 @@ class MoveItem extends APIServlet implements PermissionRestricted
         $folderInfo = $getFolderInfo->handleRequest([GetFolderMeta::FOLDER_ID => $itemId]);
 
         (new ValidatePermission($this->service))->handleRequest([
+            OAuthService::AUTH_TOKEN => $authToken,
             ValidatePermission::ITEM_PERMISSIONS => $folderInfo->getPermissions($requester),
             ValidatePermission::PERMISSIONS => [Permission::READ, Permission::CREATE],
             ValidatePermission::THROW_ERROR => true

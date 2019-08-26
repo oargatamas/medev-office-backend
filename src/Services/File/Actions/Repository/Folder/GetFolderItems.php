@@ -10,6 +10,7 @@ namespace MedevOffice\Services\File\Actions\Repository\Folder;
 
 
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
+use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\Permission\GetItemPermissions;
 use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
 use MedevOffice\Services\File\Entities\DriveEntity;
@@ -58,8 +59,9 @@ class GetFolderItems extends APIRepositoryAction
 
             $permissionsCheck =  new ValidatePermission($this->service);
 
-            $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck, $userId){
+            $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck, $userId, $args){
                 return $permissionsCheck->handleRequest([
+                    OAuthService::AUTH_TOKEN => $args[OAuthService::AUTH_TOKEN],
                     ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions($userId),
                     ValidatePermission::PERMISSIONS => [Permission::READ]
                 ]);

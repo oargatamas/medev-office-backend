@@ -10,7 +10,10 @@ namespace MedevOffice\Services\File\Actions\Repository\Permission;
 
 
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
+use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
+use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Entities\Permission;
+use MedevOffice\Services\OfficeScopes;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 use MedevSlim\Core\Service\Exceptions\ForbiddenException;
 
@@ -28,12 +31,18 @@ class ValidatePermission extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
-
+        /** @var OAuthToken $authToken */
+        $authToken = $args[OAuthService::AUTH_TOKEN];
         /** @var Permission[] $userPermissions */
         $userPermissions = $args[self::ITEM_PERMISSIONS];
         /** @var string[] $requiredPermissions */
         $requiredPermissions = $args[self::PERMISSIONS];
         $throwError = $args[self::THROW_ERROR] ?? false;
+
+        if(in_array(OfficeScopes::DRIVE_ADMIN, $authToken->getScopes())){
+            $this->service->info("User '".$authToken->getUser()->getUsername()."' has drive admin scope. No permission check needed.");
+            return true;
+        }
 
         $userPermissions = array_map(function(DatabaseEntity $entity){
             return $entity->getIdentifier();
