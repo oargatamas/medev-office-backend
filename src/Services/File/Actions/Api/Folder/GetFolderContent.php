@@ -52,6 +52,7 @@ class GetFolderContent extends APIServlet implements PermissionRestricted
 
         $getItems = new GetFolderItems($this->service);
         $items = $getItems->handleRequest([
+            OAuthService::AUTH_TOKEN => $authToken,
             GetFolderItems::FOLDER_ID => $folderId,
             GetFolderItems::USER_ID => $userId
         ]);

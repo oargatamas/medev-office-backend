@@ -55,6 +55,7 @@ class GetRootFolder extends APIServlet
         if($withContent){
             $getFolderContent = new GetFolderItems($this->service);
             $items = $getFolderContent->handleRequest([
+                OAuthService::AUTH_TOKEN => $authToken,
                 GetFolderItems::FOLDER_ID => $rootFolderId,
                 GetFolderItems::USER_ID => $authToken->getUser()->getIdentifier()
             ]);
