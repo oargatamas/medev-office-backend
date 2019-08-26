@@ -14,6 +14,7 @@ use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\Permission\GetItemPermissions;
 use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
 use MedevOffice\Services\File\OfficeFileService;
+use MedevOffice\Services\OfficeScopes;
 use MedevSlim\Core\Service\APIService;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -56,6 +57,11 @@ class PermissionChecker
 
         $userId = $authToken->getUser()->getIdentifier();
         $itemId = $routeArgs[OfficeFileService::FILE_ID] ?? $routeArgs[OfficeFileService::FOLDER_ID];
+
+        if(in_array(OfficeScopes::DRIVE_ADMIN, $authToken->getScopes())){
+            $this->service->info("User '".$authToken->getUser()->getUsername()."' has drive admin scope. No permission check needed.");
+            return $next($request, $response);
+        }
 
         $getPermissions = new GetItemPermissions($this->service);
 
