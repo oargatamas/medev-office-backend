@@ -11,7 +11,7 @@ namespace MedevOffice\Services;
 
 class OfficeScopes
 {
-    const CORE_MODULE_DRIVE = "office:drive";
+    const CORE_MODULE_DRIVE = "medev-office:drive";
 
-    const DRIVE_ADMIN = "office:drive:admin";
+    const DRIVE_ADMIN = "medev-office:drive.admin";
 }
