@@ -55,4 +55,27 @@ class Permission implements MedooPersistable
             "CreatedAt" => Medoo::raw("<p.CreatedAt>"),
         ];
     }
+
+    /**
+     * @param $userId
+     * @param $approvalId
+     * @param $permissionIds
+     * @return array
+     * @throws \Exception
+     */
+    public static function createPermissions($userId, $approvalId, $permissionIds){
+        $result = [];
+        $now = new DateTime();
+        foreach ($permissionIds as $id){
+            $entity = new Entities\Permission();
+
+            $entity->setIdentifier($id);
+            $entity->setUserId($userId);
+            $entity->setApproval($approvalId);
+            $entity->setCreatedAt($now);
+
+            $result[] = $entity;
+        }
+        return $result;
+    }
 }

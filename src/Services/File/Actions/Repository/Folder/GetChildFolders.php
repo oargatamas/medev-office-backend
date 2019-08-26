@@ -12,6 +12,7 @@ namespace MedevOffice\Services\File\Actions\Repository\Folder;
 use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Persistables\Folder;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
+use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
 class GetChildFolders extends APIRepositoryAction
 {
@@ -30,6 +31,11 @@ class GetChildFolders extends APIRepositoryAction
             Folder::getColumnNames(),
             ["h.ParentId" => $folderId,]
         );
+
+        $result = $this->database->error();
+        if(!is_null($result[2])){
+            throw new InternalServerException("Can not retrieve folders of folder: ".implode(" - ",$result));
+        }
 
         $childItems = [];
 

@@ -6,7 +6,7 @@
  * Time: 12:09
  */
 
-namespace MedevOffice\Services\File\Actions\Api\FIle;
+namespace MedevOffice\Services\File\Actions\Api\File;
 
 
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
@@ -40,10 +40,11 @@ class MoveItem extends APIServlet implements PermissionRestricted
         $folderId = $args[OfficeFileService::FOLDER_ID];
 
         $getFolderInfo = (new GetFolderMeta($this->service));
-        $folderInfo = $getFolderInfo->handleRequest([GetFolderMeta::FOLDER_ID => $itemId, GetFolderMeta::REQUESTER => $requester]);
+        $folderInfo = $getFolderInfo->handleRequest([GetFolderMeta::FOLDER_ID => $itemId]);
 
         (new ValidatePermission($this->service))->handleRequest([
-            ValidatePermission::ITEM_PERMISSIONS => $folderInfo->getPermissions(),
+            OAuthService::AUTH_TOKEN => $authToken,
+            ValidatePermission::ITEM_PERMISSIONS => $folderInfo->getPermissions($requester),
             ValidatePermission::PERMISSIONS => [Permission::READ, Permission::CREATE],
             ValidatePermission::THROW_ERROR => true
         ]);

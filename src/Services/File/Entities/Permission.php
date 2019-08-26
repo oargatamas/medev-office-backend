@@ -16,12 +16,12 @@ use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 class Permission extends DatabaseEntity implements JsonSerializable
 {
     const READ = "read";
+    const DOWNLOAD = "download";
     const DELETE = "delete";
     const UPDATE = "update";
     const CREATE = "create";
     const MOVE = "move";
-    const ADD_GRANT = "add-grant";
-    const REMOVE_GRANT = "remove-grant";
+    const GRANT_PERMISSION = "grant-permission";
 
     const ALL = [
         self::READ,
@@ -29,8 +29,8 @@ class Permission extends DatabaseEntity implements JsonSerializable
         self::UPDATE,
         self::CREATE,
         self::MOVE,
-        self::ADD_GRANT,
-        self::REMOVE_GRANT
+        self::DOWNLOAD,
+        self::GRANT_PERMISSION
     ];
 
     /**
@@ -110,7 +110,7 @@ class Permission extends DatabaseEntity implements JsonSerializable
     {
         return [
             "id" => $this->getIdentifier(),
-            "createdAt" => $this->getCreatedAt()
+            "createdAt" => $this->getCreatedAt()->getTimestamp()
         ];
     }
 }

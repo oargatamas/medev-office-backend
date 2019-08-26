@@ -13,7 +13,7 @@ use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetUserModules extends APIServlet
+class FetchUserModules extends APIServlet
 {
 
     /**
@@ -26,15 +26,13 @@ class GetUserModules extends APIServlet
     {
 
         $data = [
-            "modules" => [
-                [
-                    "name" => "dashboard",
-                    "enabled" => true
-                ],
-                [
-                    "name" => "drive",
-                    "enabled" => true
-                ]
+            [
+                "name" => "dashboard",
+                "enabled" => true
+            ],
+            [
+                "name" => "drive",
+                "enabled" => true
             ]
         ];
 

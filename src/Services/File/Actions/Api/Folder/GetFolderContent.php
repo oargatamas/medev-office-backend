@@ -10,15 +10,11 @@ namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
 
-use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
-use MedevOffice\Services\File\Actions\Repository\Folder\GetChildFiles;
-use MedevOffice\Services\File\Actions\Repository\Folder\GetChildFolders;
-use MedevOffice\Services\File\Actions\Repository\Permission\GetItemPermissions;
-use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
-use MedevOffice\Services\File\Entities\DriveEntity;
-use MedevOffice\Services\File\Entities\Folder;
+use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderItems;
+use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderMeta;
+use MedevOffice\Services\File\Actions\Repository\GetAllParentOfItem;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevOffice\Services\File\OfficeFileService;
@@ -44,39 +40,30 @@ class GetFolderContent extends APIServlet implements PermissionRestricted
         $userId = $authToken->getUser()->getIdentifier();
         $folderId = $args[OfficeFileService::FOLDER_ID];
 
-        $getFolders = new GetChildFolders($this->service);
-        $folders = $getFolders->handleRequest([Folder::ID => $folderId]);
-
-        $getFiles = new GetChildFiles($this->service);
-        $files = $getFiles->handleRequest([Folder::ID => $folderId]);
-
-        /** @var DriveEntity[] $items */
-        $items = array_merge($folders,$files);
-
-        $itemIds = array_map(function(DatabaseEntity $entity){
-            return $entity->getIdentifier();
-        },$items);
-
-        $getPermissions = new GetItemPermissions($this->service);
-        $permissions = $getPermissions->handleRequest([
-            GetItemPermissions::ITEM_ID => $itemIds,
-            GetItemPermissions::USER_ID => $userId
+        $getFolder = new GetFolderMeta($this->service);
+        $folder = $getFolder->handleRequest([
+            GetFolderMeta::FOLDER_ID => $folderId
         ]);
 
-        foreach ($items as $item){
-            $item->setPermissions($permissions[$item->getIdentifier()]);
-        }
+        $getItemParents = new GetAllParentOfItem($this->service);
+        $parents = $getItemParents->handleRequest([
+            GetAllParentOfItem::ITEM_ID => $folderId
+        ]);
 
-        $permissionsCheck =  new ValidatePermission($this->service);
+        $getItems = new GetFolderItems($this->service);
+        $items = $getItems->handleRequest([
+            OAuthService::AUTH_TOKEN => $authToken,
+            GetFolderItems::FOLDER_ID => $folderId,
+            GetFolderItems::USER_ID => $userId
+        ]);
 
-        $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck){
-            return $permissionsCheck->handleRequest([
-                ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions(),
-                ValidatePermission::PERMISSIONS => [Permission::READ]
-            ]);
-        });
+        $data = [
+            "meta" => $folder,
+            "parents" => $parents,
+            "content" => $items,
+        ];
 
-        return $response->withJson($filteredItems);
+        return $response->withJson($data,200);
     }
 
     /**

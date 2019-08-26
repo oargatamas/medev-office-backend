@@ -9,6 +9,8 @@
 namespace MedevOffice\Services\File\Actions\Api\File;
 
 
+use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
+use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\File\SaveFile;
 use MedevOffice\Services\File\Entities\Permission;
 use MedevOffice\Services\File\Middleware\PermissionRestricted;
@@ -31,12 +33,13 @@ class UploadFileToFolder extends APIServlet implements PermissionRestricted
      */
     public function handleRequest(Request $request, Response $response, $args)
     {
-        $authorId = $request->getParam("authorId");
+        /** @var OAuthToken $authToken */
+        $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
         $folderId = $args[OfficeFileService::FOLDER_ID];
         /** @var UploadedFileInterface $uploadedItem */
         $uploadedItem = $request->getUploadedFiles()["fileItem"];
 
-        if ($uploadedItem->getError() !== UPLOAD_ERR_OK) {
+        if (!$uploadedItem || $uploadedItem->getError() !== UPLOAD_ERR_OK) {
             throw new BadRequestException("File can not be uploaded.");
         }
 
@@ -45,7 +48,7 @@ class UploadFileToFolder extends APIServlet implements PermissionRestricted
         $file = $saveFile->handleRequest([
             SaveFile::HTTP_FILE => $uploadedItem,
             SaveFile::PARENT_FOLDER => $folderId,
-            SaveFile::AUTHOR => $authorId
+            SaveFile::AUTHOR => $authToken->getUser()->getIdentifier()
         ]);
 
         $data = [

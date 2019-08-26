@@ -13,6 +13,7 @@ use MedevOffice\Services\File\Entities;
 use MedevOffice\Services\File\Entities\Folder;
 use MedevOffice\Services\File\Entities\Persistables\File;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
+use MedevSlim\Core\Service\Exceptions\InternalServerException;
 
 class GetChildFiles extends APIRepositoryAction
 {
@@ -31,6 +32,12 @@ class GetChildFiles extends APIRepositoryAction
             File::getColumnNames(),
             ["h.ParentId" => $folderId]
         );
+
+
+        $result = $this->database->error();
+        if(!is_null($result[2])){
+            throw new InternalServerException("Can not retrieve files of folder: ".implode(" - ",$result));
+        }
 
         $childItems = [];
 

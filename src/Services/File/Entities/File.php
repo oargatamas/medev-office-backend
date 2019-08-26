@@ -179,9 +179,9 @@ class File extends DriveEntity implements \JsonSerializable
             "size" => $this->getFileSize(),
             "mimeType" => $this->getMimetype(),
             "author" => $this->getAuthorId(),
-            "createdAt" => $this->getCreatedAt(),
-            "updatedAt" => $this->getUpdatedAt(),
-            "permissions" => $this->getPermissions()
+            "createdAt" => $this->getCreatedAt()->getTimestamp(),
+            "updatedAt" => $this->getUpdatedAt()->getTimestamp(),
+            "permissions" => $this->getPermissionsByUser(),
         ];
     }
 }
