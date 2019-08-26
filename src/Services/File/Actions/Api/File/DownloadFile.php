@@ -66,7 +66,8 @@ class DownloadFile extends APIServlet implements PermissionRestricted
     public static function getPermissionCodes()
     {
         return [
-            Permission::READ
+            Permission::READ,
+            Permission::DOWNLOAD,
         ];
     }
 }

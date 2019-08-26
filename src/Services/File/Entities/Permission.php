@@ -16,6 +16,7 @@ use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 class Permission extends DatabaseEntity implements JsonSerializable
 {
     const READ = "read";
+    const DOWNLOAD = "download";
     const DELETE = "delete";
     const UPDATE = "update";
     const CREATE = "create";
@@ -28,6 +29,7 @@ class Permission extends DatabaseEntity implements JsonSerializable
         self::UPDATE,
         self::CREATE,
         self::MOVE,
+        self::DOWNLOAD,
         self::GRANT_PERMISSION
     ];
 
