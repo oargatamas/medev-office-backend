@@ -41,7 +41,9 @@ class AddItemPermission extends APIRepositoryAction
             ];
         }
 
-        $this->database->insert(Permission::getTableName(),$insertData);
+        if(count($permissionsToAdd) > 0){
+            $this->database->insert(Permission::getTableName(),$insertData);
+        }
 
         $result = $this->database->error();
         if(!is_null($result[2])){
