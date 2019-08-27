@@ -33,6 +33,15 @@ class Permission extends DatabaseEntity implements JsonSerializable
         self::GRANT_PERMISSION
     ];
 
+    const AUTHOR = [
+        self::READ,
+        self::DELETE,
+        self::UPDATE,
+        self::CREATE,
+        self::MOVE,
+        self::DOWNLOAD,
+    ];
+
     /**
      * @var int
      */

@@ -66,7 +66,7 @@ class SaveFile extends APIRepositoryAction
 
             (new AddItemPermission($this->service))->handleRequest([
                 AddItemPermission::ITEM_ID => $file->getIdentifier(),
-                AddItemPermission::PERMISSIONS => Permission::createPermissions($authorId,$authorId,Entities\Permission::ALL),
+                AddItemPermission::PERMISSIONS => Permission::createPermissions($authorId,$authorId,Entities\Permission::AUTHOR),
             ]);
         });
 
