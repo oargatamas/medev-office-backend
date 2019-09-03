@@ -37,7 +37,6 @@ class GetFolderContent extends APIServlet implements PermissionRestricted
     {
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
-        $userId = $authToken->getUser()->getIdentifier();
         $folderId = $args[OfficeFileService::FOLDER_ID];
 
         $getFolder = new GetFolderMeta($this->service);
@@ -53,8 +52,7 @@ class GetFolderContent extends APIServlet implements PermissionRestricted
         $getItems = new GetFolderItems($this->service);
         $items = $getItems->handleRequest([
             OAuthService::AUTH_TOKEN => $authToken,
-            GetFolderItems::FOLDER_ID => $folderId,
-            GetFolderItems::USER_ID => $userId
+            GetFolderItems::FOLDER_ID => $folderId
         ]);
 
         $data = [

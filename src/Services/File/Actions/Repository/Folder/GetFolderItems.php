@@ -10,6 +10,7 @@ namespace MedevOffice\Services\File\Actions\Repository\Folder;
 
 
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
+use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\Permission\GetItemPermissions;
 use MedevOffice\Services\File\Actions\Repository\Permission\ValidatePermission;
@@ -22,7 +23,8 @@ class GetFolderItems extends APIRepositoryAction
 {
 
     const FOLDER_ID = "folderId";
-    const USER_ID = "userId";
+    const EXCLUDE_FOLDERS = "excludeFolders";
+    const EXCLUDE_FILES = "excludeFiles";
 
     /**
      * @param $args
@@ -31,14 +33,18 @@ class GetFolderItems extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
+        /** @var OAuthToken $authToken */
+        $authToken = $args[OAuthService::AUTH_TOKEN];
         $folderId = $args[self::FOLDER_ID];
-        $userId = $args[self::USER_ID];
+
+        $excludeFolders = $args[self::EXCLUDE_FOLDERS] ?? false;
+        $excludeFiles = $args[self::EXCLUDE_FILES] ?? false;
 
         $getFolders = new GetChildFolders($this->service);
-        $folders = $getFolders->handleRequest([Folder::ID => $folderId]);
+        $folders = !$excludeFolders ? $getFolders->handleRequest([Folder::ID => $folderId]) : [];
 
         $getFiles = new GetChildFiles($this->service);
-        $files = $getFiles->handleRequest([Folder::ID => $folderId]);
+        $files = !$excludeFiles ? $getFiles->handleRequest([Folder::ID => $folderId]) : [];
 
         /** @var DriveEntity[] $items */
         $items = array_merge($folders,$files);
@@ -59,10 +65,10 @@ class GetFolderItems extends APIRepositoryAction
 
             $permissionsCheck =  new ValidatePermission($this->service);
 
-            $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck, $userId, $args){
+            $filteredItems = array_filter($items,function(DriveEntity $item) use($permissionsCheck, $authToken, $args){
                 return $permissionsCheck->handleRequest([
                     OAuthService::AUTH_TOKEN => $args[OAuthService::AUTH_TOKEN],
-                    ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions($userId),
+                    ValidatePermission::ITEM_PERMISSIONS => $item->getPermissions($authToken->getUser()->getIdentifier()),
                     ValidatePermission::PERMISSIONS => [Permission::READ]
                 ]);
             });

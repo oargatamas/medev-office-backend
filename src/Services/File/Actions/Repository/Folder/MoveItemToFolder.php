@@ -27,7 +27,7 @@ class MoveItemToFolder extends APIRepositoryAction
         $itemId = $args[self::ITEM_ID];
         $folderId = $args[self::FOLDER_ID];
 
-        $this->database->replace("Archive_ItemHierarchy",
+        $this->database->update("Archive_ItemHierarchy",
             [
                 "ParentId" => $folderId
             ],
