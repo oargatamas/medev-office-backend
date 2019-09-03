@@ -35,6 +35,11 @@ class Folder extends DriveEntity implements \JsonSerializable
     private $updatedAt;
 
     /**
+     * @var DriveEntity[]
+     */
+    private $content;
+
+    /**
      * @return string
      */
     public function getFoldername()
@@ -99,6 +104,40 @@ class Folder extends DriveEntity implements \JsonSerializable
     }
 
     /**
+     * @return DriveEntity[]
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param DriveEntity[] $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @param DriveEntity $item
+     */
+    public function addItem($item){
+        $this->content[] = $item;
+    }
+
+
+    /**
+     * @param DriveEntity $item
+     */
+    public function removeItem($item){
+        $this->content = array_filter($this->content, function(DriveEntity $a) use($item) {
+            return $a->getIdentifier() !== $item->getIdentifier();
+        });
+    }
+
+
+    /**
      * Specify data which should be serialized to JSON
      * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -115,6 +154,7 @@ class Folder extends DriveEntity implements \JsonSerializable
             "createdAt" => $this->getCreatedAt()->getTimestamp(),
             "updatedAt" => $this->getUpdatedAt()->getTimestamp(),
             "permissions" => $this->getPermissionsByUser(),
+            "content" => $this->getContent(),
         ];
     }
 }
