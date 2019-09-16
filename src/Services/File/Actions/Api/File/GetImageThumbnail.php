@@ -57,15 +57,23 @@ class GetImageThumbnail extends APIServlet implements PermissionRestricted
             throw new BadRequestException("File not found at '" . $path . "' .");
         }
 
-        $image = new ImageResize($path);
         if($desiredSize !== self::IMAGE_SIZE_ORIG){
+            $image = new ImageResize($path);
             $size = self::IMAGE_SIZES[$desiredSize];
             $image->resizeToWidth($size[0]);
+            $response->getBody()->write($image->getImageAsString());
+            return $response->withHeader("Content-Type", $fileInfo->getMimetype());
         }
-        $response->getBody()->write($image->getImageAsString());
+
+        $fh = fopen($path, 'rb');
+        $stream = new \Slim\Http\Stream($fh);
 
         return $response
-            ->withHeader("Content-Type", $fileInfo->getMimetype());
+            ->withHeader("Content-Type", $fileInfo->getMimetype())
+            ->withHeader('Expires', '0')
+            ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
+            ->withHeader('Pragma', 'public')
+            ->withBody($stream);
     }
 
     /**
