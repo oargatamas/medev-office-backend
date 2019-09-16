@@ -25,8 +25,6 @@ class GetItemPermissions extends APIRepositoryAction
      */
     public function handleRequest($args = [])
     {
-        //Todo modify to give back item permissions for all users.
-
         $itemIds = is_array($args[self::ITEM_ID]) ? $args[self::ITEM_ID] : [$args[self::ITEM_ID]];
         $userId = $args[self::USER_ID] ?? self::ALL_USER;
 

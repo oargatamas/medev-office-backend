@@ -17,6 +17,8 @@ $cookies = $_COOKIE;
 
 $application = MedevApp::fromJsonFile(__DIR__."/../config/config.json");
 
+\MedevSlim\Core\View\TwigView::inject($application->getContainer());
+
 $coreService = new OfficeCoreService($application);
 $coreService->registerService("");
 

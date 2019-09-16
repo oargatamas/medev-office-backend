@@ -2,7 +2,8 @@
   "require": {
     "medev-core/slim": "@dev",
     "medev-auth/slim": "@dev",
-    "ext-json": "*"
+    "ext-json": "*",
+    "phpmailer/phpmailer": "^6.0"
   },
   "repositories": [
     {
