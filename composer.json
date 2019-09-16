@@ -2,7 +2,8 @@
   "require": {
     "medev-core/slim": "@dev",
     "medev-auth/slim": "@dev",
-    "ext-json": "*"
+    "ext-json": "*",
+    "gumlet/php-image-resize": "^1.9"
   },
   "repositories": [
     {
