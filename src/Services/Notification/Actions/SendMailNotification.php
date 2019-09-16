@@ -33,7 +33,6 @@ abstract class SendMailNotification extends APITwigRepositoryAction
      */
     private $recipients;
 
-
     /**
      * @param string[] $recipients
      */
@@ -54,11 +53,13 @@ abstract class SendMailNotification extends APITwigRepositoryAction
 
     /**
      * @param array $data
+     * @param bool $throwError
+     * @return bool
      * @throws InternalServerException
      */
-    protected function sendMailNotification($data = [])
+    protected function sendMailNotification($data = [], $throwError = false)
     {
-        $this->info("Initiating notification mail...");
+        $this->info("Initiating mail notification...");
 
         $mail = new PHPMailer(true);
         $mailConfig = $this->config["application"]["notification"]["mail"];
@@ -82,8 +83,15 @@ abstract class SendMailNotification extends APITwigRepositoryAction
             $this->info("Sending mail notification.");
             $mail->send();
             $this->info("Mail notification sent successfully.");
+
+            return true;
+
         } catch (Exception $e) {
-            throw new InternalServerException("Mail notification can not be sent: " . $mail->ErrorInfo);
+            if ($throwError) {
+                throw new InternalServerException("Mail notification can not be sent: " . $mail->ErrorInfo);
+            }
+            $this->error($mail->ErrorInfo);
+            return false;
         }
     }
 }
