@@ -13,6 +13,7 @@ use MedevAuth\Services\Auth\OAuth\APIProtection\Service\OAuthProtectedAPIService
 use MedevOffice\Services\File\Actions\Api\DeleteItem;
 use MedevOffice\Services\File\Actions\Api\File\DownloadFile;
 use MedevOffice\Services\File\Actions\Api\File\EditFile;
+use MedevOffice\Services\File\Actions\Api\File\GetImageThumbnail;
 use MedevOffice\Services\File\Actions\Api\File\MoveItem;
 use MedevOffice\Services\File\Actions\Api\File\UploadFileToFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\CreateFolder;
@@ -33,6 +34,7 @@ class OfficeFileService extends OAuthProtectedAPIService
     const FILE_ID = "file_id";
 
     const ROUTE_DOWNLOAD_FILE = "downloadFile";
+    const ROUTE_DOWNLOAD_THUMBNAIL = "downloadImageThumbnail";
     const ROUTE_GET_ROOT_FOLDER = "getRootFolder";
     const ROUTE_GET_FOLDER_TREE = "getFolderTree";
     const ROUTE_GET_FOLDER_CONTENT = "getFolderContent";
@@ -62,6 +64,11 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,DownloadFile::getPermissionCodes()))
             ->setName(self::ROUTE_DOWNLOAD_FILE);
+
+        $app->get("/file/{".self::FILE_ID."}/thumbnail", new GetImageThumbnail($this))
+            ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
+            ->add(new PermissionChecker($this,GetImageThumbnail::getPermissionCodes()))
+            ->setName(self::ROUTE_DOWNLOAD_THUMBNAIL);
 
         $app->delete("/file/{".self::FILE_ID."}", new DeleteItem($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
