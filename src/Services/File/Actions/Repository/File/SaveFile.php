@@ -32,7 +32,7 @@ class SaveFile extends APIRepositoryAction
     {
         $file = null;
 
-        $this->database->action(function ($database) use ($args, &$file) {
+        $this->database->action(function () use ($args, &$file) {
             $folderId = $args[self::PARENT_FOLDER];
             $authorId = $args[self::AUTHOR];
             $uploadedItem = $args[self::HTTP_FILE];
@@ -41,10 +41,10 @@ class SaveFile extends APIRepositoryAction
 
             $file = new File();
             $file->setIdentifier(UUID::v4());
-            $file->setFilename($uploadedItem->getClientFilename());
+            $file->setName($uploadedItem->getClientFilename());
             $file->setMimetype($uploadedItem->getClientMediaType());
             $file->setFileSize($uploadedItem->getSize());
-            $file->setAuthorId($authorId);
+            $file->setAuthor($authorId);
             $file->setPath(""); //At the moment all files are stored in one folder. I may optimize it later if needed.
             $file->setUpdatedAt($now);
             $file->setCreatedAt($now);

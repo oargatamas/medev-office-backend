@@ -39,8 +39,9 @@ class UploadFileToFolder extends APIServlet implements PermissionRestricted
         /** @var UploadedFileInterface $uploadedItem */
         $uploadedItem = $request->getUploadedFiles()["fileItem"];
 
+
         if (!$uploadedItem || $uploadedItem->getError() !== UPLOAD_ERR_OK) {
-            throw new BadRequestException("File can not be uploaded.");
+            throw new BadRequestException("File can not be uploaded. ErrorCode: ". ($uploadedItem ? $uploadedItem->getError() :"Unknown"));
         }
 
         $saveFile = new SaveFile($this->service);

@@ -39,7 +39,7 @@ class EditFile extends APIServlet implements PermissionRestricted
         ]);
 
         //Todo add some kind of field validation logic here. e.g. empty string
-        $fileInfo->setFilename($requestBody["fileName"]);
+        $fileInfo->setName($requestBody["fileName"]);
         $fileInfo->setMimetype($requestBody["mimeType"]);
 
 

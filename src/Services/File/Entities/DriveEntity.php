@@ -9,11 +9,33 @@
 namespace MedevOffice\Services\File\Entities;
 
 
+use DateTime;
 use MedevAuth\Services\Auth\OAuth\Entity\DatabaseEntity;
 
 abstract class DriveEntity extends DatabaseEntity implements \JsonSerializable
 {
     const PERMISSION_ALL = -1;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var int
+     */
+    private $author;
+
+    /**
+     * @var DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime
+     */
+    private $updatedAt;
+
     /**
      * @var Permission[]
      */
@@ -48,5 +70,69 @@ abstract class DriveEntity extends DatabaseEntity implements \JsonSerializable
     public function setPermissions($permissions)
     {
         $this->permissions = $permissions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAuthor(): int
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param int $author
+     */
+    public function setAuthor(int $author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     */
+    public function setUpdatedAt(DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

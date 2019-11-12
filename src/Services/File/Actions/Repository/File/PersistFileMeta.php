@@ -31,8 +31,8 @@ class PersistFileMeta extends APIRepositoryAction
         $this->database->insert(File::getTableName(),
             [
                 "Id" => $file->getIdentifier(),
-                "FileName" => $file->getFilename(),
-                "Author" => $file->getAuthorId(),
+                "FileName" => $file->getName(),
+                "Author" => $file->getAuthor(),
                 "SizeInBytes" => $file->getFileSize(),
                 "Path" => $file->getPath(),
                 "MimeType" => $file->getMimetype(),

@@ -44,7 +44,7 @@ class CreateFolder extends APIServlet implements PermissionRestricted
 
         $folder = new Folder();
         $folder->setIdentifier(UUID::v4());
-        $folder->setFoldername($requestBody["folderName"]);
+        $folder->setName($requestBody["folderName"]);
         $folder->setAuthor($author->getIdentifier());
         $folder->setCreatedAt($now);
         $folder->setUpdatedAt($now);

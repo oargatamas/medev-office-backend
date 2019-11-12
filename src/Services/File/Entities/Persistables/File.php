@@ -25,8 +25,8 @@ class File implements MedooPersistable{
         $file = new Entities\File();
 
         $file->setIdentifier($storedData["FileId"]);
-        $file->setFilename($storedData["FileName"]);
-        $file->setAuthorId($storedData["FileAuthor"]);
+        $file->setName($storedData["FileName"]);
+        $file->setAuthor($storedData["FileAuthor"]);
         $file->setFileSize($storedData["FileSizeInBytes"]);
         $file->setPath($storedData["FilePath"]);
         $file->setMimetype($storedData["FileMimeType"]);
