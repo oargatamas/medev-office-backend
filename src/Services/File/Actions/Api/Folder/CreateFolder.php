@@ -51,7 +51,8 @@ class CreateFolder extends APIServlet implements PermissionRestricted
 
         (new AddFolder($this->service))->handleRequest([
             AddFolder::FOLDER => $folder,
-            AddFolder::PARENT_ID => $parentFolder
+            AddFolder::PARENT_ID => $parentFolder,
+            AddFolder::INHERIT_PERMISSIONS => $requestBody["inheritPermissions"] ?? false
         ]);
 
 

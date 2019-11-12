@@ -18,7 +18,8 @@ use MedevSlim\Core\Service\Exceptions\InternalServerException;
 class AddFolder extends APIRepositoryAction
 {
     const FOLDER = "folder";
-    const PARENT_ID = "parentId";
+    const PARENT_ID = "parentFolder";
+    const INHERIT_PERMISSIONS = "inheritPermissions";
 
     /**
      * @param $args
@@ -29,9 +30,19 @@ class AddFolder extends APIRepositoryAction
     {
         /** @var \MedevOffice\Services\File\Entities\Folder $folder */
         $folder = $args[self::FOLDER];
-        $parentFolder = $args[self::PARENT_ID];
+        $inheritPermissions = $args[self::INHERIT_PERMISSIONS];
 
-        $this->database->action(function () use ($folder, $parentFolder) {
+
+        $this->database->action(function () use ($folder, $args, $inheritPermissions) {
+
+            $parentFolder = (new GetFolderMeta($this->service))->handleRequest([
+                GetFolderMeta::FOLDER_ID => $args[self::PARENT_ID]
+            ]);
+
+            $itemPermissions = $parentFolder->getPermissions();
+            if (!$inheritPermissions) {
+                $itemPermissions = Permission::createPermissions($folder->getAuthor(), $folder->getAuthor(), Entities\Permission::AUTHOR);
+            }
 
             (new PersistFolderMeta($this->service))->handleRequest([
                 PersistFolderMeta::FOLDER => $folder
@@ -39,12 +50,12 @@ class AddFolder extends APIRepositoryAction
 
             (new AddItemPermission($this->service))->handleRequest([
                 AddItemPermission::ITEM_ID => $folder->getIdentifier(),
-                AddItemPermission::PERMISSIONS => Permission::createPermissions($folder->getAuthor(), $folder->getAuthor(), Entities\Permission::AUTHOR)
+                AddItemPermission::PERMISSIONS => $itemPermissions
             ]);
 
             (new AssignItemToFolder($this->service))->handleRequest([
                 AssignItemToFolder::ITEM_ID => $folder->getIdentifier(),
-                AssignItemToFolder::FOLDER_ID => $parentFolder
+                AssignItemToFolder::FOLDER_ID => $parentFolder->getIdentifier()
             ]);
         });
 
