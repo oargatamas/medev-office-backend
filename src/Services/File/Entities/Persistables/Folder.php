@@ -27,7 +27,7 @@ class Folder implements MedooPersistable
         $folder = new Entities\Folder();
 
         $folder->setIdentifier($storedData["FolderId"]);
-        $folder->setFoldername($storedData["FolderName"]);
+        $folder->setName($storedData["FolderName"]);
         $folder->setAuthor($storedData["FolderAuthor"]);
         $folder->setCreatedAt(new DateTime($storedData["FolderCreatedAt"]));
         $folder->setUpdatedAt(new DateTime($storedData["FolderUpdatedAt"]));

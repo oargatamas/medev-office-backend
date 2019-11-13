@@ -9,99 +9,16 @@
 namespace MedevOffice\Services\File\Entities;
 
 
-use DateTime;
 
 class Folder extends DriveEntity implements \JsonSerializable
 {
     const ID = "folderId";
-    /**
-     * @var string
-     */
-    private $folderName;
 
-    /**
-     * @var int
-     */
-    private $author;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
 
     /**
      * @var DriveEntity[]
      */
     private $content;
-
-    /**
-     * @return string
-     */
-    public function getFoldername()
-    {
-        return $this->folderName;
-    }
-
-    /**
-     * @param string $folderName
-     */
-    public function setFoldername($folderName)
-    {
-        $this->folderName = $folderName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param int $author
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
 
     /**
      * @return DriveEntity[]
@@ -149,7 +66,7 @@ class Folder extends DriveEntity implements \JsonSerializable
         return [
             "id" => $this->getIdentifier(),
             "type" => "folder",
-            "name" => $this->getFoldername(),
+            "name" => $this->getName(),
             "author" => $this->getAuthor(),
             "createdAt" => $this->getCreatedAt()->getTimestamp(),
             "updatedAt" => $this->getUpdatedAt()->getTimestamp(),

@@ -31,7 +31,7 @@ class UpdateFolderMeta extends APIRepositoryAction
         $this->database->update(Folder::getTableName(),
             [
                 "Id" => $folder->getIdentifier(),
-                "FolderName" => $folder->getFoldername(),
+                "FolderName" => $folder->getName(),
                 "Author" => $folder->getAuthor(),
                 "CreatedAt" => $folder->getCreatedAt()->format(MedooDatabase::DEFAULT_DATE_FORMAT),
                 "UpdatedAt" => (new DateTime())->format(MedooDatabase::DEFAULT_DATE_FORMAT)
