@@ -52,7 +52,7 @@ class DownloadFile extends APIServlet implements PermissionRestricted
             ->withHeader('Content-Type', 'application/download')
             ->withHeader('Content-Description', 'File Transfer')
             ->withHeader('Content-Transfer-Encoding', 'binary')
-            ->withHeader('Content-Disposition', 'attachment; filename="' . $fileInfo->getFilename() . '"')
+            ->withHeader('Content-Disposition', 'attachment; filename="' . $fileInfo->getName() . '"')
             ->withHeader('Expires', '0')
             ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
             ->withHeader('Pragma', 'public')

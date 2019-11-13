@@ -9,22 +9,11 @@
 namespace MedevOffice\Services\File\Entities;
 
 
-use DateTime;
 
 class File extends DriveEntity implements \JsonSerializable
 {
 
     const ID = "fileId";
-
-    /**
-     * @var string
-     */
-    private $filename;
-
-    /**
-     * @var int
-     */
-    private $authorId;
 
     /**
      * @var int
@@ -40,48 +29,6 @@ class File extends DriveEntity implements \JsonSerializable
      * @var string
      */
     private $mimetype;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * @return string
-     */
-    public function getFilename()
-    {
-        return $this->filename;
-    }
-
-    /**
-     * @param string $filename
-     */
-    public function setFilename($filename)
-    {
-        $this->filename = $filename;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAuthorId()
-    {
-        return $this->authorId;
-    }
-
-    /**
-     * @param int $authorId
-     */
-    public function setAuthorId($authorId)
-    {
-        $this->authorId = $authorId;
-    }
 
     /**
      * @return int
@@ -132,38 +79,6 @@ class File extends DriveEntity implements \JsonSerializable
     }
 
     /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
      * Specify data which should be serialized to JSON
      * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -174,11 +89,11 @@ class File extends DriveEntity implements \JsonSerializable
     {
         return [
             "id" => $this->getIdentifier(),
-            "name" => $this->getFilename(),
+            "name" => $this->getName(),
             "type" => "file",
             "size" => $this->getFileSize(),
             "mimeType" => $this->getMimetype(),
-            "author" => $this->getAuthorId(),
+            "author" => $this->getAuthor(),
             "createdAt" => $this->getCreatedAt()->getTimestamp(),
             "updatedAt" => $this->getUpdatedAt()->getTimestamp(),
             "permissions" => $this->getPermissionsByUser(),

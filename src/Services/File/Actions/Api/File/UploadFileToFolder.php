@@ -38,9 +38,11 @@ class UploadFileToFolder extends APIServlet implements PermissionRestricted
         $folderId = $args[OfficeFileService::FOLDER_ID];
         /** @var UploadedFileInterface $uploadedItem */
         $uploadedItem = $request->getUploadedFiles()["fileItem"];
+        $requestBody = $request->getParsedBody();
+
 
         if (!$uploadedItem || $uploadedItem->getError() !== UPLOAD_ERR_OK) {
-            throw new BadRequestException("File can not be uploaded.");
+            throw new BadRequestException("File can not be uploaded. ErrorCode: " . ($uploadedItem ? $uploadedItem->getError() : "Unknown"));
         }
 
         $saveFile = new SaveFile($this->service);
@@ -48,7 +50,8 @@ class UploadFileToFolder extends APIServlet implements PermissionRestricted
         $file = $saveFile->handleRequest([
             SaveFile::HTTP_FILE => $uploadedItem,
             SaveFile::PARENT_FOLDER => $folderId,
-            SaveFile::AUTHOR => $authToken->getUser()->getIdentifier()
+            SaveFile::AUTHOR => $authToken->getUser()->getIdentifier(),
+            SaveFile::INHERIT_PERMISSIONS => filter_var($requestBody["inheritPermissions"] ?? false, FILTER_VALIDATE_BOOLEAN)
         ]);
 
         $data = [
@@ -57,7 +60,7 @@ class UploadFileToFolder extends APIServlet implements PermissionRestricted
             "itemId" => $file->getIdentifier()
         ];
 
-        return $response->withJson($data,201);
+        return $response->withJson($data, 201);
     }
 
     /**

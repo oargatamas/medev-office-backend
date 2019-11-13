@@ -30,7 +30,7 @@ class PersistFolderMeta extends APIRepositoryAction
         $this->database->insert(Folder::getTableName(),
             [
                 "Id" => $folder->getIdentifier(),
-                "FolderName" => $folder->getFoldername(),
+                "FolderName" => $folder->getName(),
                 "Author" => $folder->getAuthor(),
                 "CreatedAt" => $folder->getCreatedAt()->format(MedooDatabase::DEFAULT_DATE_FORMAT),
                 "UpdatedAt" => $folder->getUpdatedAt()->format(MedooDatabase::DEFAULT_DATE_FORMAT),

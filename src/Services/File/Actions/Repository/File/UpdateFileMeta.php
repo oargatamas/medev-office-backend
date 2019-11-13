@@ -31,8 +31,8 @@ class UpdateFileMeta extends APIRepositoryAction
 
         $this->database->update(File::getTableName(),
             [
-                "FileName" => $file->getFilename(),
-                "Author" => $file->getAuthorId(),
+                "FileName" => $file->getName(),
+                "Author" => $file->getAuthor(),
                 "SizeInBytes" => $file->getFileSize(),
                 "Path" => $file->getPath(),
                 "MimeType" => $file->getMimetype(),
