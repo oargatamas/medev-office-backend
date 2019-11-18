@@ -13,7 +13,7 @@ use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderHierarchy;
 use MedevOffice\Services\File\Actions\Repository\Folder\GetFolderMeta;
-use MedevOffice\Services\File\Actions\Repository\Folder\GetRootFolderId;
+use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -35,7 +35,7 @@ class GetFolderTree extends APIServlet
 
         $includeFiles = filter_var($request->getParam("includeFiles",false), FILTER_VALIDATE_BOOLEAN);
 
-        $rootFolderId = (new GetRootFolderId($this->service))->handleRequest();
+        $rootFolderId = $args[OfficeFileService::FOLDER_ID];
         $rootFolderInfo = (new GetFolderMeta($this->service))->handleRequest([
             GetFolderMeta::FOLDER_ID => $rootFolderId,
         ]);

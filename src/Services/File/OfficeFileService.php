@@ -84,7 +84,7 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->setName(self::ROUTE_GET_ROOT_FOLDER);
 
-        $app->get("/folder/tree", new GetFolderTree($this))
+        $app->get("/folder/{".self::FOLDER_ID."}/descendants", new GetFolderTree($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->setName(self::ROUTE_GET_FOLDER_TREE);
 
