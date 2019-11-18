@@ -16,6 +16,7 @@ use MedevSlim\Core\Action\Repository\APIRepositoryAction;
 class GetFolderHierarchy extends APIRepositoryAction
 {
     const ROOT_FOLDER = "rootFolder";
+    const INCLUDE_FILES = "includeFiles";
 
     /**
      * @param $args
@@ -29,21 +30,25 @@ class GetFolderHierarchy extends APIRepositoryAction
         /** @var Folder $rootFolder */
         $rootFolder = $args[self::ROOT_FOLDER];
 
+        $includeFiles = $args[self::INCLUDE_FILES] ?? false;
+
         $getFolders = new GetFolderItems($this->service);
         $rootFolderItems = $getFolders->handleRequest([
             OAuthService::AUTH_TOKEN => $authToken,
             GetFolderItems::FOLDER_ID => $rootFolder->getIdentifier(),
-            GetFolderItems::EXCLUDE_FILES => true,
+            GetFolderItems::EXCLUDE_FILES => !$includeFiles,
         ]);
 
         $rootFolder->setContent($rootFolderItems);
 
         if(count($rootFolder->getContent()) > 0) {
-            foreach ($rootFolder->getContent() as $folder) {
-                (new GetFolderHierarchy($this->service))->handleRequest([
-                    OAuthService::AUTH_TOKEN => $authToken,
-                    GetFolderHierarchy::ROOT_FOLDER => $folder,
-                ]);
+            foreach ($rootFolder->getContent() as $driveItem) {
+                if($driveItem instanceof Folder){
+                    (new GetFolderHierarchy($this->service))->handleRequest([
+                        OAuthService::AUTH_TOKEN => $authToken,
+                        GetFolderHierarchy::ROOT_FOLDER => $driveItem,
+                    ]);
+                }
             }
         }
 

@@ -33,6 +33,8 @@ class GetFolderTree extends APIServlet
         /** @var OAuthToken $authToken */
         $authToken = $request->getAttribute(OAuthService::AUTH_TOKEN);
 
+        $includeFiles = filter_var($request->getParam("includeFiles",false), FILTER_VALIDATE_BOOLEAN);
+
         $rootFolderId = (new GetRootFolderId($this->service))->handleRequest();
         $rootFolderInfo = (new GetFolderMeta($this->service))->handleRequest([
             GetFolderMeta::FOLDER_ID => $rootFolderId,
@@ -41,6 +43,7 @@ class GetFolderTree extends APIServlet
         (new GetFolderHierarchy($this->service))->handleRequest([
             GetFolderHierarchy::ROOT_FOLDER => $rootFolderInfo,
             OAuthService::AUTH_TOKEN => $authToken,
+            GetFolderHierarchy::INCLUDE_FILES => $includeFiles
         ]);
 
         return $response->withJson($rootFolderInfo, 200);
