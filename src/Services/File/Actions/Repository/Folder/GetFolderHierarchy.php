@@ -47,6 +47,7 @@ class GetFolderHierarchy extends APIRepositoryAction
                     (new GetFolderHierarchy($this->service))->handleRequest([
                         OAuthService::AUTH_TOKEN => $authToken,
                         GetFolderHierarchy::ROOT_FOLDER => $driveItem,
+                        GetFolderItems::EXCLUDE_FILES => !$includeFiles,
                     ]);
                 }
             }
