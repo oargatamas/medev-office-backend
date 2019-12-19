@@ -54,12 +54,16 @@ class File extends DriveEntity implements \JsonSerializable
         return $this->path;
     }
 
+    public function getFullPath(){
+        return $this->path."/".$this->identifier;
+    }
+
     /**
      * @param string $path
      */
     public function setPath($path)
     {
-        $this->path = $path;
+        $this->path = $_SERVER["DOCUMENT_ROOT"]."/../".$path;
     }
 
     /**

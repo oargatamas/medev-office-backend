@@ -35,9 +35,7 @@ class DownloadFile extends APIServlet implements PermissionRestricted
         $getFileInfo = new GetFileMeta($this->service);
         $fileInfo = $getFileInfo->handleRequest([GetFileMeta::FILE_ID => $fileId]);
 
-
-        $basePath = $_SERVER["DOCUMENT_ROOT"] . $this->config["application"]["drive"]["documentPath"];
-        $path = $basePath . "/" . $fileInfo->getPath() . $fileInfo->getIdentifier();
+        $path = $fileInfo->getFullPath();
 
         if (!file_exists($path)) {
             throw new BadRequestException("File not found at '" . $path . "' .");

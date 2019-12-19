@@ -17,6 +17,7 @@ use MedevOffice\Services\File\Actions\Api\File\GetImageThumbnail;
 use MedevOffice\Services\File\Actions\Api\File\MoveItem;
 use MedevOffice\Services\File\Actions\Api\File\UploadFileToFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\CreateFolder;
+use MedevOffice\Services\File\Actions\Api\Folder\DownloadFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\EditFolder;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderContent;
 use MedevOffice\Services\File\Actions\Api\Folder\GetFolderTree;
@@ -34,6 +35,7 @@ class OfficeFileService extends OAuthProtectedAPIService
     const FILE_ID = "file_id";
 
     const ROUTE_DOWNLOAD_FILE = "downloadFile";
+    const ROUTE_DOWNLOAD_FOLDER = "downloadFolder";
     const ROUTE_DOWNLOAD_THUMBNAIL = "downloadImageThumbnail";
     const ROUTE_GET_ROOT_FOLDER = "getRootFolder";
     const ROUTE_GET_FOLDER_TREE = "getFolderTree";
@@ -92,6 +94,11 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
             ->add(new PermissionChecker($this,GetFolderContent::getPermissionCodes()))
             ->setName(self::ROUTE_GET_FOLDER_CONTENT);
+
+        $app->get("/folder/{".self::FOLDER_ID."}/download", new DownloadFolder($this))
+            ->setArgument(APIService::SERVICE_ID, $this->getServiceName())
+            ->add(new PermissionChecker($this,DownloadFolder::getPermissionCodes()))
+            ->setName(self::ROUTE_DOWNLOAD_FOLDER);
 
         $app->post("/folder/{".self::FOLDER_ID."}/file", new UploadFileToFolder($this))
             ->setArgument(APIService::SERVICE_ID,$this->getServiceName())
