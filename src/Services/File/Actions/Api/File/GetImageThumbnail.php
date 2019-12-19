@@ -16,6 +16,7 @@ use MedevOffice\Services\File\Middleware\PermissionRestricted;
 use MedevOffice\Services\File\OfficeFileService;
 use MedevSlim\Core\Action\Servlet\APIServlet;
 use MedevSlim\Core\Service\Exceptions\BadRequestException;
+use MedevSlim\Core\Service\Exceptions\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -46,15 +47,14 @@ class GetImageThumbnail extends APIServlet implements PermissionRestricted
         $getFileInfo = new GetFileMeta($this->service);
         $fileInfo = $getFileInfo->handleRequest([GetFileMeta::FILE_ID => $fileId]);
 
-        $basePath = $_SERVER["DOCUMENT_ROOT"] . $this->config["application"]["drive"]["documentPath"];
-        $path = $basePath . "/" . $fileInfo->getPath() . $fileInfo->getIdentifier();
+        $path = $fileInfo->getFullPath();
 
         if(strpos($fileInfo->getMimetype(), 'image/') !== 0){
            throw new BadRequestException("File is not an image based on the mime type: ".$fileInfo->getMimetype());
         }
 
         if (!file_exists($path)) {
-            throw new BadRequestException("File not found at '" . $path . "' .");
+            throw new NotFoundException("File not found at '" . $path . "' .");
         }
 
         if($desiredSize !== self::IMAGE_SIZE_ORIG){
