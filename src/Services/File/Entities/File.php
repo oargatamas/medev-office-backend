@@ -59,7 +59,7 @@ class File extends DriveEntity implements \JsonSerializable
      */
     public function setPath($path)
     {
-        $this->path = $path;
+        $this->path = $_SERVER["DOCUMENT_ROOT"]."/../".$path;
     }
 
     /**
