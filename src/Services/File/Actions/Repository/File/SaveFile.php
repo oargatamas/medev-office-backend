@@ -47,7 +47,7 @@ class SaveFile extends APIRepositoryAction
             $file->setMimetype($uploadedItem->getClientMediaType());
             $file->setFileSize($uploadedItem->getSize());
             $file->setAuthor($authorId);
-            $file->setPath(""); //At the moment all files are stored in one folder. I may optimize it later if needed.
+            $file->setPath($_SERVER["DOCUMENT_ROOT"]."/../drive/".$file->getIdentifier()); //At the moment all files are stored in one folder. I may optimize it later if needed.
             $file->setUpdatedAt($now);
             $file->setCreatedAt($now);
 
