@@ -9,6 +9,8 @@
 namespace MedevOffice\Services\File\Actions\Api\Folder;
 
 
+use Genkgo\ArchiveStream\Psr7Stream;
+use Genkgo\ArchiveStream\ZipReader;
 use MedevAuth\Services\Auth\OAuth\Entity\Token\OAuthToken;
 use MedevAuth\Services\Auth\OAuth\OAuthService;
 use MedevOffice\Services\File\Actions\Repository\CompressItems;
@@ -49,13 +51,10 @@ class DownloadFolder extends APIServlet implements PermissionRestricted
             OAuthService::AUTH_TOKEN => $authToken,
         ]);
 
-
         $compress = new CompressItems($this->service);
-        $output = $compress->handleRequest([
-                CompressItems::ITEMS => [$folder]
+        $compressedArchive = $compress->handleRequest([
+            CompressItems::ITEMS => [$folder]
         ]);
-
-        $stream = new \Slim\Http\Stream(fopen($output,"r"));
 
         return $response
             ->withHeader('Content-Type', 'application/force-download')
@@ -67,7 +66,7 @@ class DownloadFolder extends APIServlet implements PermissionRestricted
             ->withHeader('Expires', '0')
             ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
             ->withHeader('Pragma', 'public')
-            ->withBody($stream);
+            ->withBody(new Psr7Stream(new ZipReader($compressedArchive)));
     }
 
     /**
