@@ -16,7 +16,7 @@
   },
   "application": {
     "drive": {
-      "documentPath": "/../drive"
+      "documentPath": "drive"
     }
   },
   "authorization": {
