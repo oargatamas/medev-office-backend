@@ -95,7 +95,7 @@ class OfficeFileService extends OAuthProtectedAPIService
             ->add(new PermissionChecker($this,GetFolderContent::getPermissionCodes()))
             ->setName(self::ROUTE_GET_FOLDER_CONTENT);
 
-        $app->get("/folder/{".self::FOLDER_ID."}/download", new DownloadFolder($this))
+        $app->get("/folder/{".self::FOLDER_ID."}/data", new DownloadFolder($this))
             ->setArgument(APIService::SERVICE_ID, $this->getServiceName())
             ->add(new PermissionChecker($this,DownloadFolder::getPermissionCodes()))
             ->setName(self::ROUTE_DOWNLOAD_FOLDER);
