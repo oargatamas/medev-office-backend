@@ -11,7 +11,6 @@ namespace MedevOffice\Services\File\Actions\Repository;
 
 use Genkgo\ArchiveStream\Archive;
 use Genkgo\ArchiveStream\ContentInterface;
-use Genkgo\ArchiveStream\EmptyDirectory;
 use Genkgo\ArchiveStream\FileContent;
 use MedevOffice\Services\File\Entities\DriveEntity;
 use MedevOffice\Services\File\Entities\File;
@@ -50,19 +49,16 @@ class CompressItems extends APIRepositoryAction
      * @param ContentInterface[] $output
      * @param string $directoryBase
      */
-    private function mapItemsToArchiveElements($driveItems, &$output, $directoryBase = "")
+    private function mapItemsToArchiveElements($driveItems, &$output, $directoryBase = "/")
     {
         foreach ($driveItems as $item){
             if($item instanceof File){
-                $output[] = new FileContent($directoryBase."/".$item->getName(),$item->getFullPath());
+                $output[] = new FileContent($directoryBase.$item->getName(),$item->getFullPath());
             }else{
                 /** @var Folder $folder */
                 $folder = $item;
                 $content = $folder->getContent() ?? [];
-                if($directoryBase != ""){
-                    $output[] = new EmptyDirectory($directoryBase);
-                }
-                $this->mapItemsToArchiveElements($content, $output,$directoryBase."/".$folder->getName());
+                $this->mapItemsToArchiveElements($content, $output,$directoryBase.$folder->getName()."/");
             }
         }
     }
