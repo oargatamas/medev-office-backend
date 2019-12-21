@@ -9,12 +9,13 @@
 namespace MedevOffice\Services\File\Actions\Repository;
 
 
+use Genkgo\ArchiveStream\Archive;
+use Genkgo\ArchiveStream\ContentInterface;
+use Genkgo\ArchiveStream\FileContent;
 use MedevOffice\Services\File\Entities\DriveEntity;
 use MedevOffice\Services\File\Entities\File;
 use MedevOffice\Services\File\Entities\Folder;
 use MedevSlim\Core\Action\Repository\APIRepositoryAction;
-use MedevSlim\Core\Service\Exceptions\InternalServerException;
-use ZipArchive;
 
 class CompressItems extends APIRepositoryAction
 {
@@ -22,47 +23,42 @@ class CompressItems extends APIRepositoryAction
 
     /**
      * @param $args
-     * @return string
-     * @throws InternalServerException
+     * @return Archive
      */
     public function handleRequest($args = [])
     {
-        $tempFilePath = tempnam(sys_get_temp_dir(),"MD-");
         /** @var DriveEntity[] $itemsToCompress */
         $itemsToCompress = $args[self::ITEMS];
 
-        $zipFile = new ZipArchive();
+        $archive = new Archive();
 
-        if (!$zipFile->open($tempFilePath,ZipArchive::OVERWRITE)) {
-            throw new InternalServerException("Cannot open temporary file");
+        $archiveContent = [];
+
+        $this->mapItemsToArchiveElements($itemsToCompress,$archiveContent);
+
+        foreach ($archiveContent as $content){
+            $archive = $archive->withContent($content);
         }
 
-        $this->debug("Zip file status: ".$zipFile->status);
-
-        $this->populateZipFile($zipFile,$itemsToCompress);
-
-        $zipFile->close();
-
-        return $tempFilePath;
+        return $archive;
     }
 
 
     /**
-     * @param ZipArchive $zipFile
      * @param DriveEntity[] $driveItems
+     * @param ContentInterface[] $output
      * @param string $directoryBase
      */
-    private function populateZipFile($zipFile, $driveItems, $directoryBase = "")
+    private function mapItemsToArchiveElements($driveItems, &$output, $directoryBase = "/")
     {
         foreach ($driveItems as $item){
             if($item instanceof File){
-                $zipFile->addFile($item->getFullPath(),$item->getName());
+                $output[] = new FileContent($directoryBase.$item->getName(),$item->getFullPath());
             }else{
                 /** @var Folder $folder */
                 $folder = $item;
                 $content = $folder->getContent() ?? [];
-                $zipFile->addEmptyDir($directoryBase);
-                $this->populateZipFile($zipFile,$content,$directoryBase."/".$folder->getName());
+                $this->mapItemsToArchiveElements($content, $output,$directoryBase.$folder->getName()."/");
             }
         }
     }
