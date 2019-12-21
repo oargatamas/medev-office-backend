@@ -4,7 +4,8 @@
     "medev-auth/slim": "@dev",
     "ext-json": "*",
     "gumlet/php-image-resize": "^1.9",
-    "ext-zip": "*"
+    "ext-zip": "*",
+    "genkgo/archive-stream": "^3.0"
   },
   "repositories": [
     {
